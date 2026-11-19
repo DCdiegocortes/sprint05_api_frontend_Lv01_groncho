@@ -76,6 +76,7 @@ src/
 - One pink only, used rarely: primary button, active tab, progress, unread dot.
 - Black only for type and hairlines. No gradient fades, no blur placeholders, no spinners.
 - Buttons show only their label, never an arrow glyph.
+- Never underline text to highlight it or on hover. Use colour, opacity or the neumorphic press instead. The only line is the pink one under the logo.
 - Screen headlines: two lines, Inter Bold 36, tight tracking, with a mono label above (`003 — Your universe`).
 - Copy in English, short and human, no long dashes in prose.
 - Motion: animate transform and opacity only, 150 to 300 ms, springs for gestures, respect `prefers-reduced-motion`.
