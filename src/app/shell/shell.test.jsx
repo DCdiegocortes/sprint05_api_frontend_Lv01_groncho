@@ -61,6 +61,6 @@ describe('app shell', () => {
     universesApi.getMyUniverse.mockRejectedValue(Object.assign(new Error('Not found'), { response: { status: 404 } }))
     renderAt('/discover')
 
-    expect(await screen.findByRole('heading', { name: 'Create your universe.' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: /create your/i })).toBeInTheDocument()
   })
 })

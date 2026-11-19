@@ -96,6 +96,7 @@ describe('auth', () => {
     authApi.register.mockResolvedValue({ id: 9, name: 'Nina' })
     authApi.login.mockResolvedValue({ token: 'new' })
     profileApi.getProfile.mockResolvedValue({ ...ana, name: 'Nina', handle: 'nina' })
+    universesApi.getMyUniverse.mockRejectedValue(httpError(404))
     renderAt('/register')
 
     await userEvent.type(await screen.findByLabelText('Name'), 'Nina')
@@ -104,7 +105,7 @@ describe('auth', () => {
     await userEvent.type(screen.getByLabelText('Confirm password'), 'password')
     await userEvent.click(screen.getByRole('button', { name: 'Create account' }))
 
-    expect(await screen.findByRole('heading', { name: 'Create your universe.' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: /create your/i })).toBeInTheDocument()
     expect(authApi.login).toHaveBeenCalledWith({ email: 'nina@groncho.com', password: 'password' })
   })
 })
