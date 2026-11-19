@@ -19,7 +19,7 @@ export default function LandingPage() {
       <section className="mt-auto flex flex-col">
         <span className="label-mono">000 — Welcome</span>
         <h1 className="mt-4 font-serif text-[78px] leading-[0.92] font-normal tracking-[-0.01em] text-ink">
-          Taste is
+          <span className="text-accent">Taste</span> is
           <br />
           the only
           <br />
