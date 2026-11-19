@@ -5,11 +5,15 @@ import { createMemoryRouter, RouterProvider } from 'react-router'
 import Providers from '@/app/Providers.jsx'
 import { routes } from '@/app/router.jsx'
 import * as authApi from '@/api/auth.js'
+import * as notificationsApi from '@/api/notifications.js'
 import * as profileApi from '@/api/profile.js'
+import * as universesApi from '@/api/universes.js'
 import { clearToken, getToken } from '@/lib/session.js'
 
 vi.mock('@/api/auth.js')
 vi.mock('@/api/profile.js')
+vi.mock('@/api/universes.js')
+vi.mock('@/api/notifications.js')
 
 const ana = { id: 1, name: 'Ana', handle: 'ana', role: 'user', avatar_url: null }
 
@@ -32,6 +36,8 @@ beforeEach(() => {
   clearToken()
   vi.resetAllMocks()
   profileApi.getProfile.mockResolvedValue(ana)
+  universesApi.getMyUniverse.mockResolvedValue({ id: 1, name: 'Soft Minimal', images: [] })
+  notificationsApi.getUnreadCount.mockResolvedValue({ unread: 0 })
 })
 
 describe('auth', () => {
@@ -57,7 +63,7 @@ describe('auth', () => {
     await userEvent.type(screen.getByLabelText('Password'), 'password')
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }))
 
-    expect(await screen.findByText(/logged in as ana/i)).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Discover' })).toBeInTheDocument()
     expect(getToken()).toBe('tok')
     expect(authApi.login).toHaveBeenCalledWith({ email: 'ana@groncho.com', password: 'password' })
   })
