@@ -10,12 +10,14 @@ import { cn } from '@/lib/utils'
 
 const spring = { type: 'spring', stiffness: 400, damping: 30 }
 
-function scaleFor(index, hovered) {
-  if (hovered === null) return 1
+const rest = { icon: 26, text: 17, pad: 14 }
+
+function sizeFor(index, hovered) {
+  if (hovered === null) return rest
   const distance = Math.abs(index - hovered)
-  if (distance === 0) return 1.3
-  if (distance === 1) return 1.12
-  return 1
+  if (distance === 0) return { icon: 50, text: 25, pad: 20 }
+  if (distance === 1) return { icon: 36, text: 20, pad: 16 }
+  return rest
 }
 
 export default function Sidebar() {
@@ -29,32 +31,36 @@ export default function Sidebar() {
       <nav aria-label="Main" className="mt-14" onMouseLeave={() => setHovered(null)}>
         <ul className="flex flex-col gap-1.5">
           {tabs.map(({ to, label, Icon }, index) => {
-            const scale = reduceMotion ? 1 : scaleFor(index, hovered)
+            const size = reduceMotion ? rest : sizeFor(index, hovered)
             return (
               <li key={to} onMouseEnter={() => setHovered(index)}>
                 <NavLink
                   to={to}
                   className={({ isActive }) =>
                     cn(
-                      'press flex items-center gap-4 rounded-lg px-5 py-3.5 transition-colors duration-220 ease-ui',
+                      'press block rounded-lg px-5 transition-colors duration-220 ease-ui',
                       isActive ? 'bg-card shadow-raised' : 'hover:bg-card/60',
                     )
                   }
                 >
                   {({ isActive }) => (
-                    <>
-                      <motion.span animate={{ scale }} transition={spring} className="block size-[26px] origin-left">
+                    <motion.span
+                      animate={{ paddingTop: size.pad, paddingBottom: size.pad }}
+                      transition={spring}
+                      className="flex items-center gap-4"
+                    >
+                      <motion.span animate={{ width: size.icon, height: size.icon }} transition={spring} className="block shrink-0">
                         <Icon className="size-full" />
                       </motion.span>
                       <motion.span
-                        animate={{ scale: 1 + (scale - 1) * 0.6 }}
+                        animate={{ fontSize: size.text }}
                         transition={spring}
-                        className={cn('origin-left text-[17px] text-ink', isActive ? 'font-semibold' : 'font-medium')}
+                        className={cn('leading-none text-ink', isActive ? 'font-semibold' : 'font-medium')}
                       >
                         {label}
                       </motion.span>
-                      {isActive && <span className="ml-auto size-2 rounded-full bg-accent" />}
-                    </>
+                      {isActive && <span className="ml-auto size-2 shrink-0 rounded-full bg-accent" />}
+                    </motion.span>
                   )}
                 </NavLink>
               </li>
