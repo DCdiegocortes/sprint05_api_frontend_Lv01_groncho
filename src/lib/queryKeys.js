@@ -1,0 +1,17 @@
+export const queryKeys = {
+  profile: ['profile'],
+  feed: (search = '') => ['feed', search],
+  myUniverse: ['universe', 'mine'],
+  universe: (id) => ['universe', id],
+  items: ['items'],
+  item: (id) => ['item', id],
+  matches: ['matches'],
+  wardrobe: (matchId) => ['wardrobe', matchId],
+  exchanges: ['exchanges'],
+  notifications: ['notifications'],
+  unread: ['unread'],
+  users: ['users'],
+  user: (id) => ['user', id],
+  userItems: (id) => ['user', id, 'items'],
+  rankings: ['rankings'],
+}
