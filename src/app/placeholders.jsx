@@ -30,7 +30,7 @@ export function ProfilePage() {
       <button
         type="button"
         onClick={logout}
-        className="press self-start text-[15px] font-medium text-accent underline-offset-4 hover:underline"
+        className="press self-start text-[15px] font-medium text-accent transition-opacity duration-220 ease-ui hover:opacity-70"
       >
         Log out
       </button>
