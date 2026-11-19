@@ -26,7 +26,7 @@ const depths = [
 
 const styles = ['Dark academia / vintage', 'Streetwear', 'Avant-garde', 'Gothic / dark']
 
-export default function App() {
+export default function StyleguidePage() {
   const [name, setName] = useState('Dark Academia')
   const [picked, setPicked] = useState(['Dark academia / vintage'])
 

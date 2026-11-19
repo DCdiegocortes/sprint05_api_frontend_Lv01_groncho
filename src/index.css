@@ -89,6 +89,29 @@
   }
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  caret-color: var(--color-ink);
+  background-color: var(--color-paper) !important;
+  box-shadow:
+    inset 4px 4px 9px rgb(0 0 0 / 0.12),
+    inset -3px -3px 7px rgb(255 255 255 / 0.82),
+    inset 0 0 0 100px var(--color-paper) !important;
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+input:-webkit-autofill:focus,
+input:autofill:focus {
+  box-shadow:
+    0 0 0 1px var(--color-accent),
+    inset 4px 4px 9px rgb(0 0 0 / 0.12),
+    inset -3px -3px 7px rgb(255 255 255 / 0.82),
+    inset 0 0 0 100px var(--color-paper) !important;
+}
+
 @utility label-mono {
   font-family: var(--font-mono);
   font-size: var(--text-label);
