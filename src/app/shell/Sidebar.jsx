@@ -45,14 +45,16 @@ export default function Sidebar() {
                 >
                   {({ isActive }) => (
                     <motion.span
+                      initial={false}
                       animate={{ paddingTop: size.pad, paddingBottom: size.pad }}
                       transition={spring}
                       className="flex items-center gap-4"
                     >
-                      <motion.span animate={{ width: size.icon, height: size.icon }} transition={spring} className="block shrink-0">
+                      <motion.span initial={false} animate={{ width: size.icon, height: size.icon }} transition={spring} className="block shrink-0">
                         <Icon className="size-full" />
                       </motion.span>
                       <motion.span
+                        initial={false}
                         animate={{ fontSize: size.text }}
                         transition={spring}
                         className={cn('leading-none text-ink', isActive ? 'font-semibold' : 'font-medium')}

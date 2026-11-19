@@ -44,6 +44,7 @@ export default function TabBar() {
                 {({ isActive }) => (
                   <>
                     <motion.span
+                      initial={false}
                       animate={{ width: size.width, height: size.height, marginTop: size.height > 42 ? -(size.height - 42) : 0 }}
                       transition={spring}
                       className={cn(
@@ -51,7 +52,7 @@ export default function TabBar() {
                         isActive ? 'bg-paper text-ink shadow-inset' : 'text-secondary',
                       )}
                     >
-                      <motion.span animate={{ width: size.icon, height: size.icon }} transition={spring} className="block">
+                      <motion.span initial={false} animate={{ width: size.icon, height: size.icon }} transition={spring} className="block">
                         <Icon className="size-full" />
                       </motion.span>
                     </motion.span>
