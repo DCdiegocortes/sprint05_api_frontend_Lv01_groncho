@@ -13,8 +13,8 @@ export function MatchesPage() {
   return <PageHeader label="003 — Matches" title="Matches" subline="Universes that feel like yours." />
 }
 
-export function UniversePage() {
-  return <PageHeader label="004 — Universe" title="My universe" subline="Everything you are, in one place." />
+export function RequestsPage() {
+  return <PageHeader label="005 — Requests" title="Requests" subline="Gifts and trades in motion." />
 }
 
 export function NotificationsPage() {

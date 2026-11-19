@@ -71,10 +71,121 @@ function Accordion({ photos, addTile }) {
   )
 }
 
-export default function UniversePreview({ layout, photos, addTile }) {
+function Rotunda({ photos, addTile }) {
+  const middle = (photos.length - 1) / 2
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex h-[200px] items-center justify-center gap-1.5 overflow-hidden [perspective:600px]">
+        {photos.map((photo, index) => {
+          const offset = index - middle
+          return (
+            <Photo
+              key={photo.id}
+              photo={photo}
+              className="h-[150px] w-[64px] shrink-0"
+              style={{ transform: `rotateY(${offset * -18}deg) translateZ(${-Math.abs(offset) * 14}px)` }}
+            />
+          )
+        })}
+      </div>
+      {addTile}
+    </div>
+  )
+}
+
+const floatSpots = [
+  { left: '2%', top: 10, rotate: -6, width: '46%' },
+  { left: '50%', top: 0, rotate: 5, width: '44%' },
+  { left: '18%', top: 150, rotate: 3, width: '40%' },
+  { left: '56%', top: 140, rotate: -4, width: '40%' },
+  { left: '8%', top: 270, rotate: 6, width: '38%' },
+  { left: '50%', top: 270, rotate: -3, width: '42%' },
+]
+
+function Floating({ photos, addTile }) {
+  const rows = Math.ceil(photos.length / 2)
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="relative" style={{ height: rows * 135 + 40 }}>
+        {photos.map((photo, index) => {
+          const spot = floatSpots[index % floatSpots.length]
+          const lap = Math.floor(index / floatSpots.length)
+          return (
+            <Photo
+              key={photo.id}
+              photo={photo}
+              className="absolute aspect-[4/5] shadow-subtle"
+              style={{ left: spot.left, top: spot.top + lap * 400, width: spot.width, transform: `rotate(${spot.rotate}deg)` }}
+            />
+          )
+        })}
+      </div>
+      {addTile}
+    </div>
+  )
+}
+
+function Bulge({ photos, addTile }) {
+  const middle = Math.floor(photos.length / 2)
+  return (
+    <div className="flex flex-col items-center gap-2">
+      {photos.map((photo, index) => {
+        const distance = Math.abs(index - middle)
+        return (
+          <Photo
+            key={photo.id}
+            photo={photo}
+            className="aspect-[16/9]"
+            style={{ width: `${Math.max(56, 100 - distance * 16)}%` }}
+          />
+        )
+      })}
+      {addTile}
+    </div>
+  )
+}
+
+function LiquidGlass({ photos, addTile }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="relative flex h-[180px] gap-1.5">
+        {photos.map((photo) => (
+          <Photo key={photo.id} photo={photo} className="h-full flex-1" />
+        ))}
+        <span className="pointer-events-none absolute top-1/2 left-1/2 size-28 -translate-1/2 rounded-full shadow-float ring-2 ring-white/80" />
+      </div>
+      {addTile}
+    </div>
+  )
+}
+
+function Infinite({ photos, addTile }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-3 gap-1.5">
+        {photos.map((photo, index) => (
+          <Photo key={photo.id} photo={photo} className={cn('aspect-[3/4]', index % 3 === 1 && 'translate-y-5')} />
+        ))}
+      </div>
+      <div className="mt-5">{addTile}</div>
+    </div>
+  )
+}
+
+const variants = {
+  [UniverseLayout.IMAGE_GRID]: ImageGrid,
+  [UniverseLayout.CAROUSEL]: Strip,
+  [UniverseLayout.SLIDER]: Strip,
+  [UniverseLayout.ACCORDION]: Accordion,
+  [UniverseLayout.ROTUNDA]: Rotunda,
+  [UniverseLayout.FLOATING]: Floating,
+  [UniverseLayout.SCROLL_BULGE]: Bulge,
+  [UniverseLayout.LIQUID_GLASS]: LiquidGlass,
+  [UniverseLayout.INFINITE]: Infinite,
+}
+
+export default function UniversePreview({ layout, photos, addTile = null }) {
   if (!photos.length) return addTile
-  if (layout === UniverseLayout.IMAGE_GRID) return <ImageGrid photos={photos} addTile={addTile} />
-  if (layout === UniverseLayout.CAROUSEL || layout === UniverseLayout.SLIDER) return <Strip photos={photos} addTile={addTile} />
-  if (layout === UniverseLayout.ACCORDION) return <Accordion photos={photos} addTile={addTile} />
-  return <Masonry photos={photos} addTile={addTile} />
+  const Variant = variants[layout] ?? Masonry
+  return <Variant photos={photos} addTile={addTile} />
 }
