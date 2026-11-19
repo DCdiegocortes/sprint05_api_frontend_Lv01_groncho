@@ -74,14 +74,6 @@
     min-height: 100dvh;
   }
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--color-ink);
-    caret-color: var(--color-ink);
-    transition: background-color 600000s 0s, color 600000s 0s;
-  }
-
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
@@ -95,6 +87,29 @@
       animation-duration: 1ms !important;
     }
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  caret-color: var(--color-ink);
+  background-color: var(--color-paper) !important;
+  box-shadow:
+    inset 4px 4px 9px rgb(0 0 0 / 0.12),
+    inset -3px -3px 7px rgb(255 255 255 / 0.82),
+    inset 0 0 0 100px var(--color-paper) !important;
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+input:-webkit-autofill:focus,
+input:autofill:focus {
+  box-shadow:
+    0 0 0 1px var(--color-accent),
+    inset 4px 4px 9px rgb(0 0 0 / 0.12),
+    inset -3px -3px 7px rgb(255 255 255 / 0.82),
+    inset 0 0 0 100px var(--color-paper) !important;
 }
 
 @utility label-mono {
