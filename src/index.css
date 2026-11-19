@@ -146,6 +146,26 @@ input:autofill:focus {
   }
 }
 
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes sheet-out {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.sheet-content[data-state='open'] {
+  animation: sheet-in 300ms var(--ease-ui);
+}
+
+.sheet-content[data-state='closed'] {
+  animation: sheet-out 180ms var(--ease-exit);
+}
+
 .dialog-overlay[data-state='open'] {
   animation: fade-in 220ms var(--ease-ui);
 }

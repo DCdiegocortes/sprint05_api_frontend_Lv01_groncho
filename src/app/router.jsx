@@ -4,6 +4,7 @@ import LandingPage from '@/features/auth/LandingPage.jsx'
 import LoginPage from '@/features/auth/LoginPage.jsx'
 import RegisterPage from '@/features/auth/RegisterPage.jsx'
 import CreateUniversePage from '@/features/universe/CreateUniversePage.jsx'
+import EditUniversePage from '@/features/universe/editor/EditUniversePage.jsx'
 import MyUniversePage from '@/features/universe/MyUniversePage.jsx'
 import FirstPhotosPage from '@/features/universe/FirstPhotosPage.jsx'
 import NoUniverseYet from '@/features/universe/NoUniverseYet.jsx'
@@ -39,6 +40,7 @@ export const routes = [
         element: <RequireUniverse />,
         children: [
           { path: '/universe/new/photos', element: <FirstPhotosPage /> },
+          { path: '/universe/edit', element: <EditUniversePage /> },
           {
             element: <AppShell />,
             children: [

@@ -54,6 +54,7 @@ export default function MyUniversePage() {
         empty="Universe soundtrack"
       />
 
+      <div className="rounded-[26px] bg-card p-3 shadow-raised">
       <UniverseBoard
         universe={universe}
         emptyState={
@@ -62,6 +63,7 @@ export default function MyUniversePage() {
           </Link>
         }
       />
+      </div>
     </div>
   )
 }
