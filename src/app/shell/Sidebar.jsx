@@ -68,13 +68,17 @@ export default function Sidebar() {
           })}
         </ul>
       </nav>
-      <Link to="/profile" className="press mt-auto flex items-center gap-3 rounded-lg px-2 py-2">
-        <Avatar user={user} size={46} />
+      <Link to="/profile" className="press group mt-auto flex items-center gap-3 rounded-lg px-2 py-2">
+        <Avatar
+          user={user}
+          size={46}
+          className="transition-shadow duration-220 ease-ui group-hover:shadow-raised group-active:bg-paper group-active:shadow-pressed"
+        />
         <span className="flex min-w-0 flex-col">
           <span className="truncate text-sm font-semibold text-ink">@{user?.handle}</span>
           <span className="text-xs text-secondary">My universe</span>
         </span>
-        <MoreHorizontal className="ml-auto size-5 text-secondary" />
+        <MoreHorizontal className="ml-auto size-5 text-secondary transition-colors duration-220 ease-ui group-hover:text-accent" />
       </Link>
     </aside>
   )
