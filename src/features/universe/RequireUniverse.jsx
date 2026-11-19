@@ -6,13 +6,13 @@ import { queryKeys } from '@/lib/queryKeys.js'
 export default function RequireUniverse() {
   const universe = useQuery({ queryKey: queryKeys.myUniverse, queryFn: getMyUniverse })
 
-  if (universe.isPending) {
-    return (
-      <div className="grid min-h-dvh place-items-center">
-        <span className="label-mono">Universes colliding</span>
-      </div>
-    )
-  }
+  if (universe.data) return <Outlet />
   if (universe.error?.response?.status === 404) return <Navigate to="/universe/new" replace />
-  return <Outlet />
+  if (universe.isError) return <Outlet />
+
+  return (
+    <div className="grid min-h-dvh place-items-center">
+      <span className="label-mono">Universes colliding</span>
+    </div>
+  )
 }

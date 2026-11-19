@@ -17,7 +17,7 @@ export function Input({ label, error, maxLength, value, className, id, ...props 
             </label>
           )}
           {showCounter && (
-            <span className="label-mono text-[9px]">
+            <span className="label-mono ml-auto text-[9px]">
               {String(value).length} / {maxLength}
             </span>
           )}

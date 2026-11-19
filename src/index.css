@@ -112,6 +112,48 @@ input:autofill:focus {
     inset 0 0 0 100px var(--color-paper) !important;
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+}
+
+@keyframes dialog-out {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.97);
+  }
+}
+
+.dialog-overlay[data-state='open'] {
+  animation: fade-in 220ms var(--ease-ui);
+}
+
+.dialog-overlay[data-state='closed'] {
+  animation: fade-out 180ms var(--ease-exit);
+}
+
+.dialog-content[data-state='open'] {
+  animation: dialog-in 300ms var(--ease-ui);
+}
+
+.dialog-content[data-state='closed'] {
+  animation: dialog-out 180ms var(--ease-exit);
+}
+
 @utility label-mono {
   font-family: var(--font-mono);
   font-size: var(--text-label);
