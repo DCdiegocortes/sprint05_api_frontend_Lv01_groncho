@@ -16,7 +16,49 @@
   --color-engrave: #d6d6d4;
   --color-ink: #111110;
   --color-secondary: #5f5f5d;
+  --color-muted: #8a8a88;
   --color-accent: #ff2d78;
+  --color-hairline: rgb(17 17 16 / 0.12);
+
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-primary: var(--color-accent);
+  --color-primary-foreground: #ffffff;
+  --color-muted-foreground: var(--color-secondary);
+  --color-popover: var(--color-card);
+  --color-popover-foreground: var(--color-ink);
+  --color-border: var(--color-hairline);
+  --color-input: var(--color-hairline);
+  --color-ring: var(--color-accent);
+  --color-destructive: var(--color-accent);
+
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+
+  --shadow-raised: 7px 7px 16px rgb(0 0 0 / 0.13), -5px -5px 12px rgb(255 255 255 / 0.9);
+  --shadow-subtle: 4px 4px 10px rgb(0 0 0 / 0.1), -3px -3px 8px rgb(255 255 255 / 0.88);
+  --shadow-float: 10px 12px 26px rgb(0 0 0 / 0.18), -6px -6px 16px rgb(255 255 255 / 0.9);
+  --shadow-accent: 4px 6px 16px rgb(255 45 120 / 0.35), -4px -4px 10px rgb(255 255 255 / 0.8);
+  --shadow-inset: inset 4px 4px 9px rgb(0 0 0 / 0.12), inset -3px -3px 7px rgb(255 255 255 / 0.82);
+  --shadow-pressed: inset 3px 3px 7px rgb(0 0 0 / 0.16), inset -3px -3px 6px rgb(255 255 255 / 0.85);
+
+  --ease-ui: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --text-display: 40px;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.035em;
+  --text-headline: 36px;
+  --text-headline--line-height: 1.05;
+  --text-headline--letter-spacing: -0.035em;
+  --text-subline: 21px;
+  --text-item: 15px;
+  --text-item--letter-spacing: -0.01em;
+  --text-label: 10px;
+  --text-label--letter-spacing: 0.16em;
 }
 
 @layer base {
@@ -30,5 +72,34 @@
 
   body {
     min-height: 100dvh;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 1ms !important;
+      animation-duration: 1ms !important;
+    }
+  }
+}
+
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+@utility press {
+  transition: transform 120ms var(--ease-ui), box-shadow 220ms var(--ease-ui), background-color 220ms var(--ease-ui);
+  &:active:not(:disabled) {
+    transform: scale(0.97);
   }
 }
