@@ -1,5 +1,4 @@
 import PageHeader from '@/components/PageHeader.jsx'
-import { Button } from '@/components/ui/button.jsx'
 import { useAuth } from '@/features/auth/useAuth.js'
 
 export function DiscoverPage() {
@@ -28,9 +27,13 @@ export function ProfilePage() {
   return (
     <div className="flex flex-col gap-8">
       <PageHeader label="007 — Profile" title={user?.name} subline={`@${user?.handle} · ${user?.email}`} />
-      <Button variant="secondary" onClick={logout} className="self-start px-8">
+      <button
+        type="button"
+        onClick={logout}
+        className="press self-start text-[15px] font-medium text-accent underline-offset-4 hover:underline"
+      >
         Log out
-      </Button>
+      </button>
     </div>
   )
 }
