@@ -3,12 +3,20 @@
 @import '@fontsource/dm-mono/500.css';
 @import '@fontsource/instrument-serif/400.css';
 @import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource/italiana/400.css';
+@import '@fontsource/fraunces/400.css';
+@import '@fontsource/bodoni-moda/400.css';
+@import '@fontsource/noto-emoji/400.css';
 @import 'tailwindcss';
 
 @theme {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'DM Mono', ui-monospace, monospace;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --font-italiana: 'Italiana', ui-serif, serif;
+  --font-fraunces: 'Fraunces', ui-serif, serif;
+  --font-bodoni: 'Bodoni Moda', ui-serif, serif;
+  --font-emoji: 'Noto Emoji', sans-serif;
 
   --color-paper: #e6e6e4;
   --color-card: #eeeeed;
