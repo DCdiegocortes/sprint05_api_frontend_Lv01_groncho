@@ -64,7 +64,13 @@ src/
 
 ## Design rules
 
-- Tokens in `src/index.css`: paper `#E6E6E4`, card `#EEEEED`, plate `#DADAD8`, ink `#111110`, secondary `#5F5F5D`, accent `#FF2D78`.
+- Tokens live in `src/index.css` (`@theme`) and are used as Tailwind classes, never raw hex in components:
+  - colours `paper` `card` `plate` `engrave` `ink` `secondary` `muted` `accent` `hairline`
+  - depth `shadow-raised` `shadow-subtle` `shadow-float` `shadow-accent` `shadow-inset` `shadow-pressed`
+  - radius `rounded-sm` 6 · `md` 14 · `lg` 20 · `xl` 28 · `2xl` 36
+  - type `text-headline` `text-display` `text-subline` `text-item`, utility `label-mono`
+  - motion `ease-ui`, utility `press` (scale .97 on press)
+- Primitives in `src/components/ui` (shadcn style with `cn` and `cva`): `Button`, `Input`, `Chip`. New shadcn components go there through `components.json` and get restyled to these tokens. Import with the `@/` alias.
 - Fonts: Inter (UI), DM Mono (labels, uppercase, wide tracking), Instrument Serif (sublines).
 - Neumorphic paper: raised for actions and things at rest, inset for selected or active states. Selected chips are inset with ink semi bold text, never pink fills.
 - One pink only, used rarely: primary button, active tab, progress, unread dot.
