@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient } from '@tanstack/react-query'
 import { createMemoryRouter, RouterProvider } from 'react-router'
@@ -42,7 +42,7 @@ beforeEach(() => {
 afterEach(() => clearToken())
 
 describe('edit universe', () => {
-  it('places a text and saves the decorations when done', async () => {
+  it('places a text and saves the decorations on its own', async () => {
     universesApi.updateUniverse.mockResolvedValue(universe)
     renderAt('/universe/edit')
 
@@ -53,9 +53,7 @@ describe('edit universe', () => {
     await userEvent.click(within(sheet).getByRole('radio', { name: 'Pink' }))
     await userEvent.click(within(sheet).getByRole('button', { name: 'Place text' }))
 
-    expect(await screen.findByText('Unsaved')).toBeInTheDocument()
-    await userEvent.click(screen.getByRole('button', { name: 'Done' }))
-
+    await waitFor(() => expect(universesApi.updateUniverse).toHaveBeenCalled(), { timeout: 2500 })
     expect(universesApi.updateUniverse.mock.calls[0]).toEqual([
       3,
       { decorations: [{ x: 34, y: 12, type: 'TEXT', text: 'quiet armour.', font: 'BODONI', color: 'PINK', size: 18 }] },

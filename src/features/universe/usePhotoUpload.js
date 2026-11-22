@@ -26,7 +26,7 @@ export function usePhotoUpload(universeId) {
       return
     }
     setError(null)
-    const batchId = crypto.randomUUID()
+    const batchId = `${Date.now()}-${Math.random().toString(36).slice(2)}`
     const previews = files.map((file, index) => ({
       id: `${batchId}-${index}`,
       batchId,
