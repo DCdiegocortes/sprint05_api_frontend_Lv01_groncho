@@ -13,7 +13,7 @@ export default function Toast({ toast, onDone, duration = 3200 }) {
     <AnimatePresence>
       {toast && (
         <motion.div
-          key={toast.title}
+          key={toast.key ?? toast.title}
           role="status"
           initial={{ opacity: 0, y: -24, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -28,6 +28,18 @@ export default function Toast({ toast, onDone, duration = 3200 }) {
             <span className="text-sm font-semibold text-ink">{toast.title}</span>
             {toast.hint && <span className="label-mono">{toast.hint}</span>}
           </span>
+          {toast.action && (
+            <button
+              type="button"
+              onClick={() => {
+                toast.action.onClick()
+                onDone()
+              }}
+              className="press ml-1 text-[15px] font-medium text-accent transition-opacity duration-220 ease-ui hover:opacity-70"
+            >
+              {toast.action.label}
+            </button>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
