@@ -166,6 +166,30 @@ input:autofill:focus {
   animation: sheet-out 180ms var(--ease-exit);
 }
 
+@keyframes sheet-pop-in {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+@keyframes sheet-pop-out {
+  to {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+@media (min-width: 768px) {
+  .sheet-content[data-state='open'] {
+    animation: sheet-pop-in 300ms var(--ease-ui);
+  }
+
+  .sheet-content[data-state='closed'] {
+    animation: sheet-pop-out 180ms var(--ease-exit);
+  }
+}
+
 .dialog-overlay[data-state='open'] {
   animation: fade-in 220ms var(--ease-ui);
 }
@@ -180,6 +204,13 @@ input:autofill:focus {
 
 .dialog-content[data-state='closed'] {
   animation: dialog-out 180ms var(--ease-exit);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @utility label-mono {

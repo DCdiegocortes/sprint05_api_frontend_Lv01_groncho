@@ -1,8 +1,8 @@
 import { useRef } from 'react'
-import { ImagePlus } from 'lucide-react'
+import { ImagePlus, X } from 'lucide-react'
 import { Sheet, SheetContent } from '@/components/ui/sheet.jsx'
 
-export default function PhotosSheet({ open, onOpenChange, pending, error, onFiles }) {
+export default function PhotosSheet({ open, onOpenChange, photos = [], onRemove, pending, error, onFiles }) {
   const input = useRef(null)
 
   return (
@@ -52,6 +52,26 @@ export default function PhotosSheet({ open, onOpenChange, pending, error, onFile
               </li>
             ))}
           </ul>
+        )}
+        {photos.length > 0 && (
+          <section className="mt-5 flex flex-col gap-2.5">
+            <span className="label-mono text-[9px]">In your universe · {photos.length}</span>
+            <ul className="grid grid-cols-4 gap-2">
+              {photos.map((photo) => (
+                <li key={photo.id} className="relative aspect-square">
+                  <img src={photo.url} alt="" className="size-full rounded-xl object-cover shadow-subtle" />
+                  <button
+                    type="button"
+                    aria-label="Remove photo"
+                    onClick={() => onRemove(photo.id)}
+                    className="press absolute -top-1.5 -right-1.5 grid size-6 place-items-center rounded-full bg-card text-ink shadow-subtle"
+                  >
+                    <X className="size-3" strokeWidth={2} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
         )}
         <p className="mt-4 text-center font-serif text-sm text-secondary">Photos stay sharp while they upload.</p>
       </SheetContent>

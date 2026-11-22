@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router'
-import { Image, Music, Sticker, Type } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { ChevronUp, Image, Music, Smile, Type } from 'lucide-react'
+import TabBar from '@/app/shell/TabBar.jsx'
+import TopActions from '@/app/shell/TopActions.jsx'
 import Logo from '@/components/Logo.jsx'
-import { Button } from '@/components/ui/button.jsx'
 import { Limits, UniverseLayout } from '@/lib/constants.js'
+import { cn } from '@/lib/utils'
 import LayoutPicker from '../LayoutPicker.jsx'
 import SongPill from '../SongPill.jsx'
-import UniversePreview from '../UniversePreview.jsx'
 import { useDeletePhoto, useMyUniverse, useReorderPhotos, useUpdateUniverse } from '../useMyUniverse.js'
 import { usePhotoUpload } from '../usePhotoUpload.js'
 import DecorationEditor from './DecorationEditor.jsx'
-import PhotoGrid from './PhotoGrid.jsx'
+import PhotoBoard from './PhotoBoard.jsx'
 import PhotosSheet from './PhotosSheet.jsx'
 import SongSheet from './SongSheet.jsx'
 import StickersSheet from './StickersSheet.jsx'
@@ -19,12 +20,13 @@ import TextSheet from './TextSheet.jsx'
 const tools = [
   { id: 'photos', label: 'Photos', Icon: Image },
   { id: 'audio', label: 'Audio', Icon: Music },
-  { id: 'stickers', label: 'Stickers', Icon: Sticker },
+  { id: 'stickers', label: 'Stickers', Icon: Smile },
   { id: 'text', label: 'Text', Icon: Type },
 ]
 
+const AUTOSAVE_MS = 900
+
 export default function EditUniversePage() {
-  const navigate = useNavigate()
   const { data: universe } = useMyUniverse()
   const update = useUpdateUniverse(universe?.id)
   const reorder = useReorderPhotos(universe?.id)
@@ -34,6 +36,28 @@ export default function EditUniversePage() {
   const [draft, setDraft] = useState(null)
   const [selected, setSelected] = useState(null)
   const [saveError, setSaveError] = useState('')
+  const [tabsOpen, setTabsOpen] = useState(false)
+  const saveTimer = useRef(null)
+  const mutateRef = useRef(update.mutate)
+
+  useEffect(() => {
+    mutateRef.current = update.mutate
+  })
+
+  useEffect(() => {
+    if (draft === null) return undefined
+    clearTimeout(saveTimer.current)
+    saveTimer.current = setTimeout(() => {
+      mutateRef.current(
+        { decorations: draft },
+        {
+          onSuccess: () => setDraft(null),
+          onError: () => setSaveError('Your decorations could not be saved. Try again.'),
+        },
+      )
+    }, AUTOSAVE_MS)
+    return () => clearTimeout(saveTimer.current)
+  }, [draft])
 
   if (!universe) return null
 
@@ -41,27 +65,14 @@ export default function EditUniversePage() {
   const photos = universe.images ?? []
   const layout = universe.layout ?? UniverseLayout.MASONRY
 
-  const editDecorations = (next) => setDraft(next)
-
   const addDecoration = (decoration) => {
     if (decorations.length >= Limits.DECORATIONS_MAX) {
       setSaveError(`A universe holds up to ${Limits.DECORATIONS_MAX} decorations.`)
       return
     }
     const next = [...decorations, { x: 34, y: 12, ...decoration }]
-    editDecorations(next)
+    setDraft(next)
     setSelected(next.length - 1)
-  }
-
-  const done = () => {
-    if (draft === null) return navigate('/universe')
-    update.mutate(
-      { decorations: draft },
-      {
-        onSuccess: () => navigate('/universe'),
-        onError: () => setSaveError('Your decorations could not be saved. Try again.'),
-      },
-    )
   }
 
   const saveSong = (changes, onDone) =>
@@ -71,12 +82,10 @@ export default function EditUniversePage() {
     })
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[440px] flex-col gap-[18px] px-6 pt-[max(env(safe-area-inset-top),24px)] pb-[max(env(safe-area-inset-bottom),32px)] md:max-w-[768px]">
+    <main className="mx-auto flex min-h-dvh w-full max-w-[440px] flex-col gap-[18px] px-6 pt-[max(env(safe-area-inset-top),24px)] pb-28 md:max-w-[768px]">
       <div className="flex items-center justify-between pt-10">
         <Logo size={20} />
-        <Button size="sm" onClick={done} disabled={update.isPending}>
-          {update.isPending ? 'Saving' : 'Done'}
-        </Button>
+        <TopActions />
       </div>
 
       <header className="flex flex-col gap-1">
@@ -86,19 +95,30 @@ export default function EditUniversePage() {
       </header>
 
       <section className="flex flex-col gap-2.5">
-        <span className="label-mono">Layout · how others see it</span>
-        <LayoutPicker value={layout} onChange={(next) => update.mutate({ layout: next })} />
+        <div className="flex items-center justify-between">
+          <span className="label-mono">Layout · how others see it</span>
+          <span className="label-mono text-[9px] text-accent">See all 10</span>
+        </div>
+        <LayoutPicker value={layout} photos={photos} universe={{ ...universe, decorations }} onChange={(next) => update.mutate({ layout: next })} />
       </section>
 
       <div className="grid grid-cols-4 gap-3">
-        {tools.map(({ id, label, Icon }) => (
-          <button key={id} type="button" onClick={() => setSheet(id)} className="press flex flex-col items-center gap-2">
-            <span className="grid size-[58px] place-items-center rounded-full bg-paper text-ink shadow-raised">
-              <Icon className="size-[22px]" strokeWidth={1.5} />
-            </span>
-            <span className="label-mono text-[8.5px]">{label}</span>
-          </button>
-        ))}
+        {tools.map(({ id, label, Icon }) => {
+          const open = sheet === id
+          return (
+            <button key={id} type="button" onClick={() => setSheet(id)} className="press group flex flex-col items-center gap-2">
+              <span
+                className={cn(
+                  'grid size-[58px] place-items-center rounded-full bg-paper shadow-raised transition-[box-shadow,color] duration-220 ease-ui group-active:shadow-pressed',
+                  open ? 'text-accent shadow-pressed' : 'text-ink',
+                )}
+              >
+                <Icon className="size-[22px]" strokeWidth={1.5} />
+              </span>
+              <span className={cn('label-mono text-[8.5px]', open && 'text-ink')}>{label}</span>
+            </button>
+          )
+        })}
       </div>
 
       <SongPill
@@ -117,42 +137,70 @@ export default function EditUniversePage() {
         </p>
       )}
 
-      <section className="flex flex-col gap-2.5">
-        <div className="flex items-center justify-between">
-          <span className="label-mono">Moodboard · drag decorations</span>
-          {draft !== null && <span className="label-mono text-[9px] text-accent">Unsaved</span>}
-        </div>
-        <div className="rounded-[26px] bg-card p-3 shadow-raised">
-        <div className="@container relative min-h-40">
-          {photos.length ? (
-            <UniversePreview layout={layout} photos={photos} />
-          ) : (
-            <button type="button" onClick={() => setSheet('photos')} className="press grid h-40 w-full place-items-center rounded-2xl bg-paper text-sm font-semibold text-secondary shadow-inset">
-              + Add your first photos
-            </button>
-          )}
-          <DecorationEditor
-            decorations={decorations}
-            selected={selected}
-            onSelect={setSelected}
-            onChange={(index, changes) => editDecorations(decorations.map((d, i) => (i === index ? { ...d, ...changes } : d)))}
-            onRemove={(index) => {
-              editDecorations(decorations.filter((_, i) => i !== index))
-              setSelected(null)
-            }}
-          />
-        </div>
-        </div>
+      <section
+        aria-label="Your universe"
+        className="@container relative mt-1 min-h-64 md:ml-[calc(50%-min(640px,50vw-32px))] md:w-[min(1280px,100vw-64px)]"
+        onPointerDown={(event) => {
+          if (!event.target.closest('[aria-label^="Decoration"], [aria-label="Remove decoration"]')) setSelected(null)
+        }}
+      >
+        {photos.length ? (
+          <PhotoBoard fill layout={layout} photos={photos} onReorder={(next) => reorder.mutate(next)} />
+        ) : (
+          <button type="button" onClick={() => setSheet('photos')} className="press grid h-64 w-full place-items-center rounded-[22px] bg-paper text-sm font-semibold text-secondary shadow-inset">
+            + Add your first photos
+          </button>
+        )}
+        <DecorationEditor
+          decorations={decorations}
+          selected={selected}
+          onSelect={setSelected}
+          onChange={(index, changes) => setDraft(decorations.map((d, i) => (i === index ? { ...d, ...changes } : d)))}
+          onRemove={(index) => {
+            setDraft(decorations.filter((_, i) => i !== index))
+            setSelected(null)
+          }}
+        />
       </section>
 
-      {photos.length > 0 && (
-        <section className="flex flex-col gap-2.5">
-          <span className="label-mono">Photos · hold and drag to reorder</span>
-          <PhotoGrid photos={photos} onReorder={(next) => reorder.mutate(next)} onRemove={(id) => removePhoto.mutate(id)} />
-        </section>
-      )}
+      <AnimatePresence>
+        {tabsOpen ? (
+          <motion.div key="tabs" initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }} transition={{ type: 'spring', stiffness: 400, damping: 30 }}>
+            <TabBar />
+            <button
+              type="button"
+              aria-label="Hide tabs"
+              onClick={() => setTabsOpen(false)}
+              className="fixed inset-x-0 bottom-[calc(max(env(safe-area-inset-bottom),20px)+90px)] z-30 mx-auto grid size-8 place-items-center rounded-full bg-paper text-secondary shadow-subtle xl:hidden"
+            >
+              <ChevronUp className="size-4 rotate-180" strokeWidth={1.8} />
+            </button>
+          </motion.div>
+        ) : (
+          <motion.button
+            key="handle"
+            type="button"
+            onClick={() => setTabsOpen(true)}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            className="press fixed inset-x-0 bottom-[max(env(safe-area-inset-bottom),24px)] z-30 mx-auto flex w-fit items-center gap-2 rounded-full bg-paper px-5 py-2.5 shadow-float xl:hidden"
+          >
+            <ChevronUp className="size-4 text-ink" strokeWidth={1.8} />
+            <span className="label-mono text-[9px] text-ink">Tabs</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
-      <PhotosSheet open={sheet === 'photos'} onOpenChange={(open) => setSheet(open ? 'photos' : null)} pending={pending} error={uploadError} onFiles={upload} />
+      <PhotosSheet
+        open={sheet === 'photos'}
+        onOpenChange={(open) => setSheet(open ? 'photos' : null)}
+        photos={photos}
+        onRemove={(id) => removePhoto.mutate(id)}
+        pending={pending}
+        error={uploadError}
+        onFiles={upload}
+      />
       <SongSheet open={sheet === 'audio'} onOpenChange={(open) => setSheet(open ? 'audio' : null)} universe={universe} onSave={saveSong} saving={update.isPending} />
       <StickersSheet open={sheet === 'stickers'} onOpenChange={(open) => setSheet(open ? 'stickers' : null)} onPick={addDecoration} />
       <TextSheet open={sheet === 'text'} onOpenChange={(open) => setSheet(open ? 'text' : null)} onPlace={addDecoration} />
