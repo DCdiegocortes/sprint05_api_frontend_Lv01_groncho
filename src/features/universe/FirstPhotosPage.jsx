@@ -126,7 +126,7 @@ export default function FirstPhotosPage() {
             <span className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rotate-45 rounded-[2px] bg-ink" />
           </span>
         )}
-        <LayoutPicker value={layout} onChange={pickLayout} />
+        <LayoutPicker value={layout} onChange={pickLayout} photos={photos.filter((photo) => !photo.uploading)} universe={universe} />
       </section>
 
       <div className="mt-auto flex flex-col items-center gap-3 pt-6">
