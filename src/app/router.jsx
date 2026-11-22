@@ -11,8 +11,8 @@ import MyUniversePage from '@/features/universe/MyUniversePage.jsx'
 import FirstPhotosPage from '@/features/universe/FirstPhotosPage.jsx'
 import NoUniverseYet from '@/features/universe/NoUniverseYet.jsx'
 import RequireUniverse from '@/features/universe/RequireUniverse.jsx'
+import MatchesPage from '@/features/matches/MatchesPage.jsx'
 import {
-  MatchesPage,
   NotificationsPage,
   ProfilePage,
   RequestsPage,
