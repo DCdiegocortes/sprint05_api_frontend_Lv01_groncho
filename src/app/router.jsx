@@ -3,6 +3,7 @@ import { PublicOnly, RequireAuth } from '@/features/auth/guards.jsx'
 import LandingPage from '@/features/auth/LandingPage.jsx'
 import LoginPage from '@/features/auth/LoginPage.jsx'
 import RegisterPage from '@/features/auth/RegisterPage.jsx'
+import DiscoverPage from '@/features/discover/DiscoverPage.jsx'
 import CreateUniversePage from '@/features/universe/CreateUniversePage.jsx'
 import EditUniversePage from '@/features/universe/editor/EditUniversePage.jsx'
 import MyUniversePage from '@/features/universe/MyUniversePage.jsx'
@@ -11,7 +12,6 @@ import NoUniverseYet from '@/features/universe/NoUniverseYet.jsx'
 import RequireUniverse from '@/features/universe/RequireUniverse.jsx'
 import {
   ClosetPage,
-  DiscoverPage,
   MatchesPage,
   NotificationsPage,
   ProfilePage,
@@ -47,6 +47,7 @@ export const routes = [
               { path: '/discover', element: <DiscoverPage /> },
               { path: '/closet', element: <ClosetPage /> },
               { path: '/matches', element: <MatchesPage /> },
+              { path: '/matches/:matchId', element: <MatchesPage /> },
               { path: '/universe', element: <MyUniversePage /> },
               { path: '/universe/requests', element: <RequestsPage /> },
               { path: '/notifications', element: <NotificationsPage /> },
