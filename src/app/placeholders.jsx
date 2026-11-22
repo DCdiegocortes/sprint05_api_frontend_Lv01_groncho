@@ -1,10 +1,6 @@
 import PageHeader from '@/components/PageHeader.jsx'
 import { useAuth } from '@/features/auth/useAuth.js'
 
-export function MatchesPage() {
-  return <PageHeader label="003 — Matches" title="Matches" subline="Universes that feel like yours." />
-}
-
 export function RequestsPage() {
   return <PageHeader label="005 — Requests" title="Requests" subline="Gifts and trades in motion." />
 }

@@ -4,11 +4,15 @@ import { QueryClient } from '@tanstack/react-query'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import Providers from '@/app/Providers.jsx'
 import { routes } from '@/app/router.jsx'
+import * as itemsApi from '@/api/items.js'
+import * as matchesApi from '@/api/matches.js'
 import * as notificationsApi from '@/api/notifications.js'
 import * as profileApi from '@/api/profile.js'
 import * as universesApi from '@/api/universes.js'
 import { clearToken, setToken } from '@/lib/session.js'
 
+vi.mock('@/api/items.js')
+vi.mock('@/api/matches.js')
 vi.mock('@/api/profile.js')
 vi.mock('@/api/universes.js')
 vi.mock('@/api/notifications.js')
@@ -30,6 +34,8 @@ beforeEach(() => {
   profileApi.getProfile.mockResolvedValue({ id: 1, name: 'Ana', handle: 'ana', role: 'user', avatar_url: null })
   universesApi.getMyUniverse.mockResolvedValue({ id: 1, name: 'Soft Minimal', images: [] })
   notificationsApi.getUnreadCount.mockResolvedValue({ unread: 3 })
+  itemsApi.getItems.mockResolvedValue([])
+  matchesApi.getMatches.mockResolvedValue([])
 })
 
 afterEach(() => clearToken())

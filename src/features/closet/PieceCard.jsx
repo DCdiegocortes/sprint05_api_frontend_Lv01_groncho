@@ -7,8 +7,8 @@ export default function PieceCard({ piece }) {
   const locked = isLocked(piece)
 
   return (
-    <Link to={`/closet/${piece.id}`} className="press group flex flex-col overflow-hidden rounded-[20px] bg-paper shadow-raised">
-      <span className="relative block aspect-[190/214] overflow-hidden bg-plate">
+    <Link to={`/closet/${piece.id}`} className="press group flex flex-col overflow-hidden rounded-[20px] bg-paper shadow-raised xl:rounded-[22px]">
+      <span className="relative block aspect-[190/214] overflow-hidden bg-plate xl:aspect-[248/250]">
         {cover && (
           <img
             src={cover}
@@ -23,9 +23,9 @@ export default function PieceCard({ piece }) {
           </span>
         )}
       </span>
-      <span className="flex flex-col items-start gap-2 p-3">
-        <span className="line-clamp-1 text-[13px] font-semibold tracking-[-0.01em] text-ink">{piece.name}</span>
-        <span className="rounded-[4px] bg-ink/[0.06] px-2 py-[3px] font-mono text-[10px] font-medium tracking-[0.12em] text-secondary uppercase">
+      <span className="flex flex-col items-start gap-2 px-3 pt-3 pb-3.5 xl:px-3.5 xl:pt-3.5 xl:pb-4">
+        <span className="line-clamp-1 text-[13px] leading-4 font-semibold tracking-[-0.01em] text-ink xl:text-[15px] xl:leading-[18px]">{piece.name}</span>
+        <span className="rounded-[4px] bg-ink/[0.06] px-2 py-[3px] font-mono text-[10px] leading-[13px] font-medium tracking-[0.12em] text-secondary uppercase xl:px-[9px] xl:py-1">
           {offerLabel[piece.offer_type]}
         </span>
       </span>

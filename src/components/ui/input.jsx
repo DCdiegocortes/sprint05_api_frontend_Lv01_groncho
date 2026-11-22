@@ -30,7 +30,7 @@ export function Input({ label, error, maxLength, value, className, id, ...props 
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
         className={cn(
-          'h-[50px] w-full rounded-md bg-paper px-4 text-[15px] text-ink shadow-inset outline-none transition-shadow duration-220 ease-ui placeholder:text-muted',
+          'h-14 w-full rounded-md bg-paper px-4 text-base text-ink shadow-inset outline-none transition-shadow duration-220 ease-ui placeholder:text-muted',
           'focus-visible:outline-none focus:ring-1 focus:ring-accent',
           error && 'ring-1 ring-accent',
         )}

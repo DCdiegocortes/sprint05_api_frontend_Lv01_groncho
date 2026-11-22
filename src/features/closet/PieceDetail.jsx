@@ -73,7 +73,7 @@ export default function PieceDetail({ piece, onEdit, onDelete, layout = 'page' }
           <Row label="Type" value={labelOf(typeOptions, piece.type)} />
         </div>
 
-        {piece.description && <p className="font-serif text-[19px] leading-snug text-secondary">{piece.description}</p>}
+        {piece.description && <p className="font-serif text-[19px] leading-[1.25] text-secondary">{piece.description}</p>}
 
         <div className={cn('grid grid-cols-2 gap-3', dialog && 'md:mt-auto')}>
           <Button variant="secondary" onClick={onDelete}>
