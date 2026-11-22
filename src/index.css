@@ -221,6 +221,19 @@ input:autofill:focus {
   color: var(--color-secondary);
 }
 
+@utility photo-action {
+  color: var(--color-accent);
+  & svg {
+    filter: drop-shadow(0 0 1.5px rgb(255 255 255 / 0.6));
+    transition: transform 120ms var(--ease-ui), filter 120ms var(--ease-ui), color 120ms var(--ease-ui);
+  }
+  &:active svg {
+    color: #e01f69;
+    transform: scale(0.92);
+    filter: drop-shadow(-0.6px -0.6px 0 rgb(80 4 32 / 0.5)) drop-shadow(0.8px 0.8px 0 rgb(255 255 255 / 0.9));
+  }
+}
+
 @utility press {
   transition: transform 120ms var(--ease-ui), box-shadow 220ms var(--ease-ui), background-color 220ms var(--ease-ui);
   &:active:not(:disabled) {
