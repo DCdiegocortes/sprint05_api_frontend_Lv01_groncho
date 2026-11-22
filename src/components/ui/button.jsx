@@ -11,7 +11,7 @@ const buttonVariants = cva(
         ghost: 'text-secondary hover:text-ink',
       },
       size: {
-        md: 'h-14 px-6 text-[15px]',
+        md: 'h-[54px] px-7 text-[15px]',
         sm: 'h-10 px-5 text-sm',
         icon: 'size-10',
       },

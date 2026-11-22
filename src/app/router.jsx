@@ -12,11 +12,8 @@ import FirstPhotosPage from '@/features/universe/FirstPhotosPage.jsx'
 import NoUniverseYet from '@/features/universe/NoUniverseYet.jsx'
 import RequireUniverse from '@/features/universe/RequireUniverse.jsx'
 import MatchesPage from '@/features/matches/MatchesPage.jsx'
-import {
-  NotificationsPage,
-  ProfilePage,
-  RequestsPage,
-} from './placeholders.jsx'
+import RequestsPage from '@/features/requests/RequestsPage.jsx'
+import { NotificationsPage, ProfilePage } from './placeholders.jsx'
 import AppShell from './shell/AppShell.jsx'
 import StyleguidePage from './StyleguidePage.jsx'
 
