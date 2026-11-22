@@ -1,10 +1,6 @@
 import PageHeader from '@/components/PageHeader.jsx'
 import { useAuth } from '@/features/auth/useAuth.js'
 
-export function NotificationsPage() {
-  return <PageHeader label="006 — Notifications" title="Notifications" subline="What moved while you were away." />
-}
-
 export function ProfilePage() {
   const { user, logout } = useAuth()
 

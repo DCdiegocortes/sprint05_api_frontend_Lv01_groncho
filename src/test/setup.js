@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom/vitest'
+import { configure } from '@testing-library/react'
+
+configure({ asyncUtilTimeout: 3000 })
 
 if (!window.ResizeObserver) {
   window.ResizeObserver = class {
