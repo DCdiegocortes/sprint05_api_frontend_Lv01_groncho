@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'motion/react'
 import { Eye } from 'lucide-react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { swipe } from '@/api/swipes.js'
 import { getFeed } from '@/api/universes.js'
 import EmptyState from '@/components/EmptyState.jsx'
 import PageHeader from '@/components/PageHeader.jsx'
+import { Segmented } from '@/components/ui/segmented.jsx'
+import RankingsView from '@/features/rankings/RankingsView.jsx'
 import { queryKeys } from '@/lib/queryKeys.js'
 import { useAuth } from '@/features/auth/useAuth.js'
 import { displayStyle } from '@/features/universe/styles.js'
@@ -36,10 +38,11 @@ function Owner({ universe }) {
 
 export default function DiscoverPage() {
   const navigate = useNavigate()
+  const rankings = useLocation().pathname.startsWith('/discover/rankings')
   const queryClient = useQueryClient()
   const { user } = useAuth()
   const { data: mine } = useMyUniverse()
-  const feed = useQuery({ queryKey: queryKeys.feed(), queryFn: () => getFeed() })
+  const feed = useQuery({ queryKey: queryKeys.feed(), queryFn: () => getFeed(), enabled: !rankings })
   const [index, setIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const [match, setMatch] = useState(null)
@@ -73,9 +76,35 @@ export default function DiscoverPage() {
     }
   }
 
+  const switcher = (
+    <Segmented
+      label="Discover"
+      className="md:w-[340px]"
+      value={rankings ? 'rankings' : 'universes'}
+      onChange={(next) => navigate(next === 'rankings' ? '/discover/rankings' : '/discover')}
+      options={[
+        { value: 'universes', label: 'Universes' },
+        { value: 'rankings', label: 'Rankings' },
+      ]}
+    />
+  )
+
+  if (rankings) {
+    return (
+      <div className="flex flex-col gap-[18px] xl:gap-10">
+        <PageHeader label="001 — Discover" title="Discover" subline="Who and what everyone wants." />
+        <div className="flex flex-col gap-[18px] xl:gap-8">
+          {switcher}
+          <RankingsView />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-[18px] pb-[110px] xl:gap-10">
       <PageHeader label="001 — Discover" title="Discover" subline="Universes worth getting lost in." />
+      {switcher}
 
       {feed.isPending || (feed.isFetching && !current) ? (
         <span className="label-mono py-20 text-center">Universes colliding</span>
@@ -104,9 +133,7 @@ export default function DiscoverPage() {
             <UniverseBoard
               universe={current}
               emptyState={
-                <div className="grid h-60 place-items-center rounded-2xl bg-paper font-serif text-lg text-secondary shadow-inset">
-                  {current.name}
-                </div>
+                <div className="grid h-60 place-items-center rounded-2xl bg-paper font-serif text-lg text-secondary shadow-inset">{current.name}</div>
               }
             />
           </motion.article>

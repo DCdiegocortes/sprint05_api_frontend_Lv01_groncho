@@ -42,6 +42,7 @@ export const routes = [
             element: <AppShell />,
             children: [
               { path: '/discover', element: <DiscoverPage /> },
+              { path: '/discover/rankings', element: <DiscoverPage /> },
               { path: '/closet', element: <ClosetPage /> },
               { path: '/closet/:itemId', element: <ClosetPage /> },
               { path: '/matches', element: <MatchesPage /> },
