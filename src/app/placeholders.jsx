@@ -1,10 +1,6 @@
 import PageHeader from '@/components/PageHeader.jsx'
 import { useAuth } from '@/features/auth/useAuth.js'
 
-export function ClosetPage() {
-  return <PageHeader label="002 — Closet" title="Closet" subline="Pieces ready to change hands." />
-}
-
 export function MatchesPage() {
   return <PageHeader label="003 — Matches" title="Matches" subline="Universes that feel like yours." />
 }
