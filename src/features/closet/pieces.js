@@ -1,4 +1,5 @@
 import { ItemCondition, ItemStatus, ItemType, OfferType } from '@/lib/constants.js'
+import { countWord } from '@/lib/words.js'
 
 export const offerLabel = {
   [OfferType.TRADE]: 'Trade',
@@ -36,11 +37,8 @@ export const labelOf = (options, value) => options.find((option) => option.value
 
 export const isLocked = (piece) => piece.status === ItemStatus.UNAVAILABLE
 
-const words = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve']
-
 export function closetSubline(pieces) {
   const ready = pieces.filter((piece) => !isLocked(piece)).length
   if (!pieces.length) return 'Nothing here yet.'
-  const count = words[ready] ?? String(ready)
-  return `${count} ${ready === 1 ? 'piece' : 'pieces'} ready to change hands.`
+  return `${countWord(ready)} ${ready === 1 ? 'piece' : 'pieces'} ready to change hands.`
 }

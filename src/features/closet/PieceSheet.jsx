@@ -12,6 +12,7 @@ import { conditionOptions, offerOptions, typeOptions } from './pieces.js'
 import { useSavePiece } from './useCloset.js'
 
 const SIZE_MAX = 20
+const NAME_MAX = 255
 
 function Thumb({ photo, onOpen, onRemove }) {
   return (
@@ -77,6 +78,7 @@ function PieceForm({ piece, onDone }) {
     event.preventDefault()
     const found = {}
     if (!name.trim()) found.name = 'Give your piece a name.'
+    else if (name.trim().length > NAME_MAX) found.name = `Keep the name under ${NAME_MAX} characters.`
     if (size.length > SIZE_MAX) found.size = `Keep the size under ${SIZE_MAX} characters.`
     setErrors(found)
     if (Object.keys(found).length) return
@@ -135,20 +137,13 @@ function PieceForm({ piece, onDone }) {
         {errors.photos && <p className="text-[13px] text-secondary">{errors.photos}</p>}
       </div>
 
-      <Input
-        label="Name"
-        value={name}
-        maxLength={255}
-        error={errors.name}
-        placeholder="Silver moto boots"
-        onChange={(event) => setName(event.target.value)}
-      />
+      <Input label="Name" value={name} error={errors.name} placeholder="Silver moto boots" onChange={(event) => setName(event.target.value)} />
 
       <div className="grid gap-[18px] sm:grid-cols-2 sm:gap-3">
         <Input label="Size" value={size} error={errors.size} placeholder="42 EU" onChange={(event) => setSize(event.target.value)} />
         <div className="flex flex-col gap-2">
           <span className="label-mono font-medium">Type</span>
-          <Segmented label="Type" options={typeOptions} value={type} onChange={setType} />
+          <Segmented fit label="Type" options={typeOptions} value={type} onChange={setType} />
         </div>
       </div>
 
@@ -201,7 +196,7 @@ function PieceForm({ piece, onDone }) {
 export default function PieceSheet({ open, onOpenChange, piece = null }) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent title={piece ? 'Edit piece' : 'Add a piece'} subtitle="Photos first, the rest takes a minute.">
+      <SheetContent serif title={piece ? 'Edit piece' : 'Add a piece'} subtitle="Photos first, the rest takes a minute.">
         <PieceForm piece={piece} onDone={() => onOpenChange(false)} />
       </SheetContent>
     </Sheet>

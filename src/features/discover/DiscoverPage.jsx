@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'motion/react'
-import { Link, useNavigate } from 'react-router'
+import { Eye } from 'lucide-react'
+import { useNavigate } from 'react-router'
 import { swipe } from '@/api/swipes.js'
 import { getFeed } from '@/api/universes.js'
+import EmptyState from '@/components/EmptyState.jsx'
 import PageHeader from '@/components/PageHeader.jsx'
 import { queryKeys } from '@/lib/queryKeys.js'
 import { useAuth } from '@/features/auth/useAuth.js'
@@ -72,19 +74,19 @@ export default function DiscoverPage() {
   }
 
   return (
-    <div className="flex flex-col gap-[18px] pb-[110px]">
+    <div className="flex flex-col gap-[18px] pb-[110px] xl:gap-10">
       <PageHeader label="001 — Discover" title="Discover" subline="Universes worth getting lost in." />
 
       {feed.isPending || (feed.isFetching && !current) ? (
         <span className="label-mono py-20 text-center">Universes colliding</span>
       ) : !current ? (
-        <div className="flex flex-col items-center gap-4 rounded-[26px] bg-card px-6 py-14 text-center shadow-raised">
-          <p className="font-serif text-2xl text-ink">You have seen every universe.</p>
-          <p className="text-sm text-secondary">New ones arrive as people join. Meanwhile, make yours shine.</p>
-          <Link to="/universe/edit" className="press mt-2 rounded-full bg-paper px-6 py-3 text-sm font-semibold text-ink shadow-raised">
-            Edit your universe
-          </Link>
-        </div>
+        <EmptyState
+          icon={Eye}
+          title="You have seen every universe."
+          body="New ones arrive as people join. Meanwhile, make yours shine."
+          action="Edit your universe"
+          to="/universe/edit"
+        />
       ) : (
         <AnimatePresence mode="popLayout" initial={false} custom={direction}>
           <motion.article
