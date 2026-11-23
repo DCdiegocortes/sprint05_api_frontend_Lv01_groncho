@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { AnimatePresence, motion } from 'motion/react'
-import { ChevronUp, Image, Music, Smile, Type } from 'lucide-react'
+import { ChevronLeft, ChevronUp, Image, Music, Smile, Type } from 'lucide-react'
 import TabBar from '@/app/shell/TabBar.jsx'
 import TopActions from '@/app/shell/TopActions.jsx'
 import Logo from '@/components/Logo.jsx'
@@ -12,9 +12,8 @@ import { layouts } from '../layouts.js'
 import SongPill from '../SongPill.jsx'
 import { useDeletePhoto, useMyUniverse, useReorderPhotos, useUpdateUniverse } from '../useMyUniverse.js'
 import { usePhotoUpload } from '../usePhotoUpload.js'
-import { useMediaQuery } from '@/hooks/useMediaQuery.js'
 import DecorationEditor from './DecorationEditor.jsx'
-import DoneAction from './DoneAction.jsx'
+import SaveStatus from './SaveStatus.jsx'
 import LayoutsSheet from './LayoutsSheet.jsx'
 import { useSaveState } from './useSaveState.js'
 import PhotoBoard from './PhotoBoard.jsx'
@@ -40,7 +39,6 @@ export default function EditUniversePage() {
   const { pending, error: uploadError, upload } = usePhotoUpload(universe?.id)
   const navigate = useNavigate()
   const location = useLocation()
-  const wide = useMediaQuery('(min-width: 768px)')
   const [sheet, setSheet] = useState(() => location.state?.tool ?? null)
   const [autosaveFailed, setAutosaveFailed] = useState(false)
   const [leaving, setLeaving] = useState(false)
@@ -89,8 +87,9 @@ export default function EditUniversePage() {
     if (draft !== null) saveDraft(draft)
   }
 
-  const done = () => {
-    if (failed) return retry()
+  const leave = (event) => {
+    if (!busy) return
+    event.preventDefault()
     if (draft !== null) saveDraft(draft)
     setLeaving(true)
   }
@@ -117,7 +116,7 @@ export default function EditUniversePage() {
       trackId={universe.spotify_track_id}
       title={universe.spotify_track_title}
       onEmptyClick={() => setSheet('audio')}
-      className={wide ? 'max-w-[300px] shrink-0' : 'w-full'}
+      className="w-full"
     />
   )
 
@@ -131,20 +130,22 @@ export default function EditUniversePage() {
     <main className="mx-auto flex min-h-dvh w-full max-w-[440px] flex-col gap-[18px] px-6 pt-[max(env(safe-area-inset-top),24px)] pb-28 md:max-w-[768px]">
       <div className="flex items-center justify-between pt-10">
         <Logo size={20} />
-        <div className="flex items-center gap-5">
-          <DoneAction state={saveState} onDone={done} onRetry={retry} />
-          <TopActions />
-        </div>
+        <TopActions />
       </div>
 
-      <div className="flex items-center justify-between gap-6">
-        <header className="flex flex-col gap-1">
-          <span className="label-mono">004 — Editing</span>
-          <h1 className="text-display font-bold">Edit universe</h1>
-          <p className="font-serif text-subline text-secondary">Drag photos to reorder them.</p>
-        </header>
-        {wide && soundtrack}
-      </div>
+      <header className="flex flex-col gap-1">
+        <Link
+          to="/universe"
+          onClick={leave}
+          className="press mb-2 flex items-center gap-1.5 self-start text-[15px] font-medium text-accent opacity-60 transition-opacity duration-220 ease-ui hover:opacity-100 focus-visible:opacity-100"
+        >
+          <ChevronLeft className="size-4" strokeWidth={1.8} />
+          My universe
+        </Link>
+        <SaveStatus state={saveState} onRetry={retry} />
+        <h1 className="text-display font-bold">Edit universe</h1>
+        <p className="font-serif text-subline text-secondary">Drag photos to reorder them.</p>
+      </header>
 
       <section className="flex flex-col gap-2.5">
         <div className="flex items-center justify-between">
@@ -177,7 +178,7 @@ export default function EditUniversePage() {
             </button>
           )
         })}
-        {!wide && <div className="col-span-4 px-[calc((100%-36px)/8)] pt-1.5">{soundtrack}</div>}
+        <div className="col-span-4 px-[calc((100%-36px)/8)] pt-1.5 md:px-[calc((100%-36px)/8+29px)]">{soundtrack}</div>
       </div>
 
       {saveError && (
