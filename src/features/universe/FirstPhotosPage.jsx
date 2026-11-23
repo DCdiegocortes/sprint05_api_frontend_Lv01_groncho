@@ -5,6 +5,7 @@ import { getMyUniverse, updateUniverse } from '@/api/universes.js'
 import Logo from '@/components/Logo.jsx'
 import { Button } from '@/components/ui/button.jsx'
 import { UniverseLayout } from '@/lib/constants.js'
+import { useMediaQuery } from '@/hooks/useMediaQuery.js'
 import { queryKeys } from '@/lib/queryKeys.js'
 import { layoutName } from './layouts.js'
 import LayoutPicker from './LayoutPicker.jsx'
@@ -26,6 +27,7 @@ export default function FirstPhotosPage() {
   const queryClient = useQueryClient()
   const fileInput = useRef(null)
   const [coachSeen, setCoachSeen] = useState(readCoachSeen)
+  const finePointer = useMediaQuery('(hover: hover) and (pointer: fine)')
   const { data: universe } = useQuery({ queryKey: queryKeys.myUniverse, queryFn: getMyUniverse })
   const { pending, error, upload } = usePhotoUpload(universe?.id)
 
@@ -122,11 +124,11 @@ export default function FirstPhotosPage() {
             Swipe for all 10
           </span>
         </div>
-        {!coachSeen && (
-          <span className="pointer-events-none absolute -top-5 left-[132px] z-10 flex items-center gap-2 rounded-[14px] bg-ink px-3.5 py-2 text-[12.5px] font-medium text-white shadow-float">
+        {!coachSeen && !finePointer && (
+          <span className="pointer-events-none absolute -top-5 left-[58px] z-10 flex -translate-x-1/2 items-center gap-2 rounded-[14px] bg-paper px-3.5 py-2 text-[13px] font-medium whitespace-nowrap text-ink shadow-float">
             <span className="size-1.5 rounded-full bg-accent" />
-            Tap to preview
-            <span className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rotate-45 rounded-[2px] bg-ink" />
+            Hold to preview
+            <span className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rotate-45 rounded-[2px] bg-paper" />
           </span>
         )}
         <LayoutPicker value={layout} onChange={pickLayout} photos={photos.filter((photo) => !photo.uploading)} universe={universe} />
