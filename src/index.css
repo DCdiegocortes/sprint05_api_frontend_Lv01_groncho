@@ -246,3 +246,119 @@ input:autofill:focus {
     transform: scale(0.97);
   }
 }
+
+@keyframes eq-bar {
+  from {
+    transform: scaleY(0.25);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility eq-bar {
+  transform-origin: bottom;
+  animation: eq-bar var(--eq-speed, 0.9s) ease-in-out infinite alternate;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    transform: scaleY(0.6);
+  }
+}
+
+@utility breathe {
+  animation: breathe 0.9s ease-in-out infinite alternate;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes ink-in {
+  from {
+    color: var(--color-engrave);
+  }
+  to {
+    color: var(--color-ink);
+  }
+}
+
+@keyframes sink-in {
+  from {
+    box-shadow: var(--shadow-raised);
+    transform: scale(1);
+  }
+  to {
+    box-shadow: var(--shadow-pressed);
+    transform: scale(0.94);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility ink-in {
+  animation: ink-in 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility sink-in {
+  box-shadow: var(--shadow-pressed);
+  transform: scale(0.94);
+  animation: sink-in 0.55s var(--ease-ui) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility appear {
+  animation: appear 0.4s ease both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility text-emboss {
+  color: var(--color-engrave);
+  text-shadow:
+    0.5px 0.5px 0.5px rgb(255 255 255 / 0.95),
+    -0.6px -0.8px 1px rgb(0 0 0 / 0.32);
+}
+
+@keyframes word-loop {
+  0% {
+    color: var(--color-engrave);
+  }
+  14%,
+  72% {
+    color: var(--color-ink);
+  }
+  88%,
+  100% {
+    color: var(--color-engrave);
+  }
+}
+
+@utility word-loop {
+  color: var(--color-engrave);
+  animation: word-loop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    color: var(--color-ink);
+  }
+}

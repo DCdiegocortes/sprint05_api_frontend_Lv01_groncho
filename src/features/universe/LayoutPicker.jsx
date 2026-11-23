@@ -18,7 +18,7 @@ function Tile({ photos, index, className, style }) {
   )
 }
 
-function Thumb({ value, photos }) {
+export function Thumb({ value, photos }) {
   const t = (index, className, style) => <Tile key={index} photos={photos} index={index} className={className} style={style} />
 
   switch (value) {
@@ -92,8 +92,11 @@ function Preview({ universe, layout, left }) {
       className="pointer-events-none absolute bottom-full z-30 mb-2 w-[260px] origin-bottom rounded-[24px] bg-card p-2.5 shadow-float"
     >
       <div className="flex items-center justify-between px-1.5 pb-2">
-        <span className="label-mono text-[8px]">Preview</span>
-        <span className="font-mono text-[8px] font-medium tracking-[0.16em] text-accent uppercase">{layoutName(layout)}</span>
+        <span className="label-mono text-[10px]">Preview</span>
+        <span className="flex items-center gap-2 font-mono text-[10px] font-medium tracking-[0.16em] text-ink/70 uppercase">
+          <span aria-hidden="true" className="size-[5px] shrink-0 rounded-full bg-accent" />
+          {layoutName(layout)}
+        </span>
       </div>
       <div className="max-h-[300px] overflow-hidden rounded-2xl">
         <UniverseBoard universe={{ ...universe, layout }} />
@@ -168,13 +171,14 @@ export default function LayoutPicker({ value, onChange, photos = [], universe })
   }
 
   return (
-    <div ref={wrapper} className="relative">
+    <div ref={wrapper} className="relative isolate">
       <AnimatePresence>{preview && <Preview key={preview.layout} universe={universe} layout={preview.layout} left={preview.left} />}</AnimatePresence>
       <div
         role="radiogroup"
         aria-label="Layout"
-        onMouseMove={(event) => mouseX.set(event.clientX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
+        onPointerMove={(event) => mouseX.set(event.pointerType === 'mouse' ? event.clientX : Infinity)}
+        onPointerLeave={() => mouseX.set(Infinity)}
+        onPointerDown={(event) => event.pointerType !== 'mouse' && mouseX.set(Infinity)}
         className="no-scrollbar -mx-6 flex snap-x scroll-px-6 items-end gap-3 overflow-x-auto px-6 pt-2 pb-5 md:pointer-events-none md:-mt-36 md:pt-38 md:*:pointer-events-auto"
       >
         {layouts.map((layout) => {
@@ -212,16 +216,17 @@ export default function LayoutPicker({ value, onChange, photos = [], universe })
                 onChange(layout.value)
               }}
               className={cn(
-                'flex flex-col gap-2.5 rounded-[20px] p-2 text-left ring-1 transition-[background-color] duration-220 ease-ui',
-                selected ? 'bg-card shadow-raised ring-accent' : 'bg-paper ring-transparent',
+                'relative flex flex-col gap-2.5 rounded-[20px] p-2 text-left transition-[background-color] duration-220 ease-ui',
+                selected ? 'bg-card shadow-raised' : 'bg-paper',
               )}
             >
+              {selected && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[20px] border-[1.5px] border-accent" />}
               <span className="block h-[79px] overflow-hidden rounded-[14px] bg-paper p-1.5 shadow-inset">
                 <Thumb value={layout.value} photos={photos} />
               </span>
               <span className="flex min-w-0 flex-col gap-1 px-1 pb-1">
                 <span className="truncate text-[13px] leading-tight font-semibold whitespace-nowrap text-ink">{layout.name}</span>
-                <span className={cn('label-mono truncate text-[7.5px] leading-snug whitespace-nowrap', selected && 'text-accent')}>
+                <span className={cn('label-mono truncate text-[10px] leading-snug tracking-[0.04em] whitespace-nowrap', selected && 'text-ink/70')}>
                   {layout.hint}
                 </span>
               </span>

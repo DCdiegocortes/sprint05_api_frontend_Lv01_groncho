@@ -15,8 +15,25 @@ export const colors = [
 ]
 
 const sets = {
+  chrome: ['heart', 'spark', 'thorn-ring', 'butterfly', 'moon', 'crown', 'cross', 'wings'],
   dreamy: ['bubble', 'glass-heart', 'jelly-heart', 'cotton-heart', 'cloud', 'gummy-bear', 'lollipop', 'pearl-spark'],
-  pixel: ['ufo', 'jp-lets-swap', 'game-over', 'cd', 'life-hearts', 'card', 'star', 'headphones', 'hourglass', 'error-404', 'i-love-you', 'outline-hearts', 'camera', 'jp-daisuki', 'cursor'],
+  pixel: [
+    'ufo',
+    'jp-lets-swap',
+    'game-over',
+    'cd',
+    'life-hearts',
+    'card',
+    'star',
+    'headphones',
+    'hourglass',
+    'error-404',
+    'i-love-you',
+    'outline-hearts',
+    'camera',
+    'jp-daisuki',
+    'cursor',
+  ],
   ink: ['broken-glass', '404-tea', 'smiley-roll', 'error-glitch', 'pickle', 'dustpan', 'knife', 'bad-news', 'balloon-gun', 'fangs'],
 }
 

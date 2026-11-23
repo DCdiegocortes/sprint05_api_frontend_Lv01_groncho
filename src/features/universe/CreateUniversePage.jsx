@@ -41,8 +41,7 @@ export default function CreateUniversePage() {
 
   const done = [name.trim().length > 0, styles.length > 0, description.trim().length > 0].filter(Boolean).length
 
-  const toggle = (style) =>
-    setStyles((current) => (current.includes(style) ? current.filter((s) => s !== style) : [...current, style]))
+  const toggle = (style) => setStyles((current) => (current.includes(style) ? current.filter((s) => s !== style) : [...current, style]))
 
   const addOwn = (style) => {
     setOwnStyles((current) => (current.includes(style) ? current : [...current, style]))
@@ -80,7 +79,7 @@ export default function CreateUniversePage() {
               />
             ))}
           </div>
-          <span className="label-mono text-[8.5px]">
+          <span className="label-mono text-[10px]">
             {done} of 3 · {progressCopy[done]}
           </span>
         </div>
@@ -97,7 +96,14 @@ export default function CreateUniversePage() {
       </header>
 
       <div className="mt-7 flex flex-col gap-4">
-        <StepCard number="01" title="Name it" status={name.trim() ? 'Done' : 'Required'} statusTone={name.trim() ? 'accent' : 'muted'} active={active === 1} onActivate={() => setActive(1)}>
+        <StepCard
+          number="01"
+          title="Name it"
+          status={name.trim() ? 'Done' : 'Required'}
+          statusTone={name.trim() ? 'accent' : 'muted'}
+          active={active === 1}
+          onActivate={() => setActive(1)}
+        >
           <Input
             aria-label="Universe name"
             value={name}
@@ -128,7 +134,7 @@ export default function CreateUniversePage() {
             <button
               type="button"
               onClick={() => setOwnOpen(true)}
-              className="press inline-flex h-[30px] items-center rounded-full border border-dashed border-secondary px-3 text-xs font-medium text-secondary transition-colors duration-220 ease-ui hover:border-accent hover:text-accent"
+              className="press inline-flex h-[30px] items-center rounded-full border border-dashed border-secondary px-3 text-xs font-medium text-secondary transition-colors duration-220 ease-ui hover:border-accent hover:text-ink"
             >
               + Your own
             </button>
@@ -155,7 +161,7 @@ export default function CreateUniversePage() {
         <Button type="submit" className="w-full" disabled={create.isPending}>
           {create.isPending ? 'Building your universe' : 'Create universe'}
         </Button>
-        <span className="label-mono text-[9px]">Next · Dress it in photos</span>
+        <span className="label-mono text-[10px]">Next · Dress it in photos</span>
       </div>
 
       <OwnStyleDialog open={ownOpen} onOpenChange={setOwnOpen} styles={styles} onAdd={addOwn} />

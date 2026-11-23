@@ -20,7 +20,7 @@ export default function PhotosSheet({ open, onOpenChange, photos = [], onRemove,
         >
           <ImagePlus className="size-7 text-secondary" strokeWidth={1.4} />
           <span className="text-[15px] font-semibold text-ink">Drop images or browse</span>
-          <span className="label-mono text-[8.5px]">JPG, PNG · up to 10 MB each</span>
+          <span className="label-mono text-[10px]">JPG, PNG · up to 10 MB each</span>
         </button>
         <input
           ref={input}
@@ -48,14 +48,14 @@ export default function PhotosSheet({ open, onOpenChange, photos = [], onRemove,
                 <span className="relative h-1 flex-1 overflow-hidden rounded-full bg-plate">
                   <span className="absolute inset-y-0 left-0 rounded-full bg-accent" style={{ width: `${Math.round(photo.progress * 100)}%` }} />
                 </span>
-                <span className="label-mono w-9 text-right text-[9px] text-ink">{Math.round(photo.progress * 100)}%</span>
+                <span className="label-mono w-9 text-right text-[10px] text-ink">{Math.round(photo.progress * 100)}%</span>
               </li>
             ))}
           </ul>
         )}
         {photos.length > 0 && (
           <section className="mt-5 flex flex-col gap-2.5">
-            <span className="label-mono text-[9px]">In your universe · {photos.length}</span>
+            <span className="label-mono text-[10px]">In your universe · {photos.length}</span>
             <ul className="grid grid-cols-4 gap-2">
               {photos.map((photo) => (
                 <li key={photo.id} className="relative aspect-square">

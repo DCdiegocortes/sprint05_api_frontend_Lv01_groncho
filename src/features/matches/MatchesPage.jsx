@@ -1,9 +1,11 @@
 import { useCallback, useState } from 'react'
-import { Heart } from 'lucide-react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
+import { Heart, HeartOff } from 'lucide-react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router'
 import PageHeader from '@/components/PageHeader.jsx'
 import Avatar from '@/components/Avatar.jsx'
-import EmptyState from '@/components/EmptyState.jsx'
+import EmptyWall from '@/components/EmptyWall.jsx'
 import Toast from '@/components/Toast.jsx'
 import { Segmented } from '@/components/ui/segmented.jsx'
 import { useMediaQuery } from '@/hooks/useMediaQuery.js'
@@ -71,14 +73,23 @@ function MatchRow({ match, selected }) {
   )
 }
 
-function EmptyMatches() {
+const emptyLines = {
+  none: 'Your taste is single. Go mingle.',
+  [MatchStatus.ACTIVE]: 'Your taste is single. Go mingle.',
+  [MatchStatus.CLOSED]: 'No goodbyes yet. Every match is still on.',
+}
+
+function EmptyMatches({ kind, onSeeActive }) {
+  if (kind === MatchStatus.CLOSED && onSeeActive) {
+    return <EmptyWall icon={HeartOff} line={emptyLines[kind]} action="See your matches?" onClick={onSeeActive} label="See your active matches" />
+  }
   return (
-    <EmptyState
-      icon={Heart}
-      title="Matches start in Discover."
-      body="When someone likes your universe back, their wardrobe opens here."
-      action="Go to Discover"
+    <EmptyWall
+      icon={kind === MatchStatus.CLOSED ? HeartOff : Heart}
+      line={emptyLines[kind]}
+      action="Explore universes?"
       to="/discover"
+      label="Explore universes in Discover"
     />
   )
 }
@@ -100,7 +111,13 @@ export default function MatchesPage() {
     navigate('/matches')
   }
 
-  if (!matches) return <PageHeader label="003 — Matches" title="Matches" />
+  if (!matches)
+    return (
+      <div className="flex flex-col">
+        <PageHeader label="003 — Matches" title="Matches" />
+        <Loader line={loadingLines.matches} />
+      </div>
+    )
 
   const active = matches.filter(isActive)
   const closed = matches.filter((match) => match.status === MatchStatus.CLOSED)
@@ -126,7 +143,7 @@ export default function MatchesPage() {
     return (
       <div className="flex flex-col gap-[18px] xl:gap-10">
         <PageHeader label="003 — Matches" title="Matches" subline="Nobody yet, and that is fine." />
-        <EmptyMatches />
+        <EmptyMatches kind="none" />
       </div>
     )
   }
@@ -150,7 +167,12 @@ export default function MatchesPage() {
     <div className="flex flex-col gap-[18px] xl:gap-10">
       <PageHeader label="003 — Matches" title="Matches" subline={subline} />
 
-      {wide ? (
+      {!shown.length ? (
+        <>
+          <div className="xl:w-[340px]">{switcher}</div>
+          <EmptyMatches kind={status} onSeeActive={active.length ? () => setView(MatchStatus.ACTIVE) : undefined} />
+        </>
+      ) : wide ? (
         <div className="grid grid-cols-[340px_minmax(0,1fr)] items-start gap-8">
           <div className="flex flex-col gap-4">
             {switcher}
@@ -158,7 +180,6 @@ export default function MatchesPage() {
               {shown.map((match) => (
                 <MatchRow key={match.id} match={match} selected={selected?.id === match.id} />
               ))}
-              {!shown.length && <p className="px-1 font-serif text-lg text-secondary">Nothing here yet.</p>}
             </div>
           </div>
           {selected && (
@@ -174,7 +195,6 @@ export default function MatchesPage() {
             {shown.map((match) => (
               <MatchCard key={match.id} match={match} />
             ))}
-            {!shown.length && <p className="font-serif text-lg text-secondary">Nothing here yet.</p>}
           </div>
         </>
       )}

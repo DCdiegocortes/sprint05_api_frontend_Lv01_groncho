@@ -35,7 +35,7 @@ export default function TextSheet({ open, onOpenChange, onPlace }) {
               className="w-full resize-none bg-transparent leading-none outline-none placeholder:opacity-40"
               style={{ fontFamily: family, color: css, fontSize: Math.max(18, size * 1.4) }}
             />
-            <span className="label-mono block text-right text-[8.5px]">
+            <span className="label-mono block text-right text-[10px]">
               {text.length} / {Limits.DECORATION_TEXT_MAX}
             </span>
           </div>
@@ -57,13 +57,13 @@ export default function TextSheet({ open, onOpenChange, onPlace }) {
                 <span className="text-xl text-ink" style={{ fontFamily: item.family }}>
                   Aa
                 </span>
-                <span className="label-mono text-[7px]">{item.name}</span>
+                <span className="label-mono text-[10px] tracking-[0.02em]">{item.name}</span>
               </button>
             ))}
           </div>
 
           <label className="flex items-center gap-4">
-            <span className="label-mono w-12 text-[9px]">Size</span>
+            <span className="label-mono w-12 text-[10px]">Size</span>
             <input
               type="range"
               min={6}
@@ -75,7 +75,7 @@ export default function TextSheet({ open, onOpenChange, onPlace }) {
           </label>
 
           <div className="flex items-center gap-4">
-            <span className="label-mono w-12 text-[9px]">Colour</span>
+            <span className="label-mono w-12 text-[10px]">Colour</span>
             <div role="radiogroup" aria-label="Colour" className="flex gap-3">
               {colors.map((item) => (
                 <button

@@ -1,4 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { deleteItemImages, deleteItems } from '@/api/items.js'
 import PhotoAction from '@/components/PhotoAction.jsx'
 import { OfferType } from '@/lib/constants.js'
@@ -96,7 +98,7 @@ export default function ModeratePieces({ userId, fine, notify }) {
     })
   }
 
-  if (isPending) return <p className="label-mono">Loading pieces</p>
+  if (isPending) return <Loader line={loadingLines.admin} />
   if (isError) return <p className="text-sm text-secondary">The pieces could not be loaded. Try again in a moment.</p>
 
   const shown = items.filter((piece) => !pieces.hidden.has(piece.id))

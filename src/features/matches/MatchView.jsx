@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { ChevronLeft } from 'lucide-react'
-import { Link } from 'react-router'
+import BackLink from '@/components/BackLink.jsx'
 import { Segmented } from '@/components/ui/segmented.jsx'
 import { offerLabel } from '@/features/closet/pieces.js'
 import SongPill from '@/features/universe/SongPill.jsx'
@@ -54,16 +53,9 @@ export default function MatchView({ match, standalone = false, onClosed }) {
   return (
     <div className="flex flex-col gap-[18px]">
       {standalone && (
-        <div className="grid grid-cols-[40px_1fr_40px] items-center">
-          <Link
-            to="/matches"
-            aria-label="Back to matches"
-            className="press grid size-10 place-items-center rounded-full bg-paper text-ink shadow-raised"
-          >
-            <ChevronLeft className="size-[18px]" strokeWidth={1.8} />
-          </Link>
-          <span className="label-mono text-center">Match</span>
-        </div>
+        <BackLink to="/matches" label="Back to matches">
+          Matches
+        </BackLink>
       )}
 
       <header className="flex flex-col gap-1">

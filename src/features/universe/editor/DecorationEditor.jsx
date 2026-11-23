@@ -76,7 +76,7 @@ export default function DecorationEditor({ decorations, selected, onSelect, onCh
       </div>
       {current && (
         <div className="absolute inset-x-3 bottom-3 z-20 flex items-center gap-3 rounded-full bg-card/95 px-4 py-2.5 shadow-float">
-          <span className="label-mono text-[8.5px]">Size</span>
+          <span className="label-mono text-[10px]">Size</span>
           <input
             type="range"
             aria-label="Decoration size"

@@ -1,12 +1,10 @@
 import { Navigate, Outlet, useLocation } from 'react-router'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { useAuth } from './useAuth.js'
 
 function Loading() {
-  return (
-    <div className="grid min-h-dvh place-items-center">
-      <span className="label-mono">Universes colliding</span>
-    </div>
-  )
+  return <Loader full kicker="Grôncho" line={loadingLines.app} />
 }
 
 export function RequireAuth() {

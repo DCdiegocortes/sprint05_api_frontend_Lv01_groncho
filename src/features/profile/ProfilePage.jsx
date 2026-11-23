@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { Link } from 'react-router'
 import { Camera, ChevronRight, LogOut, Shield } from 'lucide-react'
 import Avatar from '@/components/Avatar.jsx'
@@ -43,7 +45,13 @@ export default function ProfilePage() {
     setToast({ title, hint: 'Saved' })
   }
 
-  if (!user) return <PageHeader label="007 — Profile" title="Profile" />
+  if (!user)
+    return (
+      <div className="flex flex-col">
+        <PageHeader label="007 — Profile" title="Profile" />
+        <Loader line={loadingLines.profile} />
+      </div>
+    )
 
   return (
     <div className="flex flex-col gap-[18px] xl:gap-10">

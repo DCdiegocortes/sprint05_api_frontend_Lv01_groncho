@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { ArrowLeftRight } from 'lucide-react'
 import EmptyState from '@/components/EmptyState.jsx'
 import PageHeader from '@/components/PageHeader.jsx'
@@ -25,7 +27,13 @@ export default function RequestsPage() {
   const clearToast = useCallback(() => setToast(null), [])
 
   const header = <PageHeader label="005 — Requests" title="Requests" subline="Gifts and trades in motion." />
-  if (!data) return header
+  if (!data)
+    return (
+      <div className="flex flex-col">
+        {header}
+        <Loader line={loadingLines.requests} />
+      </div>
+    )
 
   const { received, sent } = data
   if (!received.length && !sent.length) {

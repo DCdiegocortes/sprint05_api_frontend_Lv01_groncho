@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { useParams } from 'react-router'
 import PageHeader from '@/components/PageHeader.jsx'
 import Toast from '@/components/Toast.jsx'
@@ -46,7 +48,7 @@ export default function ModeratePage() {
           ]}
         />
       </div>
-      {isPending && <span className="label-mono">Loading</span>}
+      {isPending && <Loader line={loadingLines.admin} />}
       {isError && <p className="text-sm text-secondary">This user could not be loaded.</p>}
       {user && tab === Tab.UNIVERSE && <ModeratePhotos user={user} fine={fine} notify={setToast} />}
       {user && tab === Tab.PIECES && <ModeratePieces userId={userId} fine={fine} notify={setToast} />}

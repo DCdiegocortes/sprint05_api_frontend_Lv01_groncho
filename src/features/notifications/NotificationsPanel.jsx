@@ -1,4 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { Bell } from 'lucide-react'
 import NotificationList, { ReadAll } from './NotificationList.jsx'
 import { useNotifications } from './useNotifications.js'
@@ -24,6 +26,7 @@ export default function NotificationsPanel({ open, onOpenChange }) {
             </div>
             {notifications?.length > 0 && <ReadAll notifications={notifications} />}
           </div>
+          {!notifications && <Loader line={loadingLines.notifications} className="py-14" />}
           {notifications &&
             (notifications.length ? (
               <NotificationList notifications={notifications} hint="Hover a row to mark read · Esc to close" onOpen={() => onOpenChange(false)} />

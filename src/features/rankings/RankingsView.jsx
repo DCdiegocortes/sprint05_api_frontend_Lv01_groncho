@@ -4,7 +4,7 @@ import { Crown } from 'lucide-react'
 import { getItemRanking } from '@/api/items.js'
 import { getUserRanking } from '@/api/users.js'
 import Avatar from '@/components/Avatar.jsx'
-import EmptyState from '@/components/EmptyState.jsx'
+import EmptyWall from '@/components/EmptyWall.jsx'
 import { Chip } from '@/components/ui/chip.jsx'
 import PhotoViewer from '@/features/closet/PhotoViewer.jsx'
 import { queryKeys } from '@/lib/queryKeys.js'
@@ -132,12 +132,12 @@ export default function RankingsView() {
 
   if (items.data && people.data && !items.data.length && !people.data.length) {
     return (
-      <EmptyState
+      <EmptyWall
         icon={Crown}
-        title="No rankings yet."
-        body="They appear once people start asking for pieces."
-        action="Back to universes"
+        line="No crowns yet. Taste is still deciding."
+        action="Explore universes?"
         to="/discover"
+        label="Explore universes in Discover"
       />
     )
   }
@@ -167,7 +167,13 @@ export default function RankingsView() {
             <People rows={rows} />
           )
         ) : (
-          <p className="font-serif text-lg text-secondary">Nothing here yet.</p>
+          <EmptyWall
+            icon={Crown}
+            line={list === 'pieces' ? 'No piece has been begged for yet.' : 'Nobody on the podium yet.'}
+            action="Explore universes?"
+            to="/discover"
+            label="Explore universes in Discover"
+          />
         ))}
     </div>
   )

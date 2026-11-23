@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient } from '@tanstack/react-query'
 import { createMemoryRouter, RouterProvider } from 'react-router'
@@ -121,15 +121,31 @@ describe('profile', () => {
     )
   })
 
-  it('uploads a new photo', async () => {
+  it('frames the chosen photo, then uploads the crop', async () => {
     profileApi.uploadAvatar.mockResolvedValue({ ...ana, avatar_url: '/a.jpg' })
+    URL.createObjectURL = vi.fn(() => 'blob:me')
+    URL.revokeObjectURL = vi.fn()
+    HTMLCanvasElement.prototype.getContext = vi.fn(() => ({ drawImage: vi.fn() }))
+    HTMLCanvasElement.prototype.toBlob = vi.fn(function (done) {
+      done(new Blob(['x'], { type: 'image/jpeg' }))
+    })
     renderAt('/profile')
     await screen.findByRole('heading', { name: 'Ana Ruiz' })
 
-    const file = new File(['x'], 'me.jpg', { type: 'image/jpeg' })
-    await userEvent.upload(screen.getAllByTestId('avatar-input')[0], file)
+    await userEvent.upload(screen.getAllByTestId('avatar-input')[0], new File(['x'], 'me.png', { type: 'image/png' }))
+    const dialog = await screen.findByRole('dialog', { name: 'Frame your photo' })
+    expect(profileApi.uploadAvatar).not.toHaveBeenCalled()
 
-    expect(profileApi.uploadAvatar).toHaveBeenCalledWith(file, expect.anything())
+    const photo = dialog.querySelector('img')
+    Object.defineProperty(photo, 'naturalWidth', { value: 800 })
+    Object.defineProperty(photo, 'naturalHeight', { value: 1000 })
+    fireEvent.load(photo)
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Use photo' }))
+
+    await waitFor(() => expect(profileApi.uploadAvatar).toHaveBeenCalled())
+    const sent = profileApi.uploadAvatar.mock.calls[0][0]
+    expect(sent.name).toBe('me.jpg')
+    expect(sent.type).toBe('image/jpeg')
   })
 
   it('logs out from the slide and lands on the welcome screen with a toast', async () => {

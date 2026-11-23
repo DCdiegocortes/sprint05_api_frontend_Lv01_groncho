@@ -65,11 +65,11 @@ describe('add your first photos', () => {
     universesApi.updateUniverse.mockResolvedValue({ ...universe, layout: 'IMAGE_GRID' })
     renderAt('/universe/new/photos')
 
-    expect(await screen.findByText('Tap to preview')).toBeInTheDocument()
+    expect(await screen.findByText('Hold to preview')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('radio', { name: /image grid/i }))
 
     expect(universesApi.updateUniverse).toHaveBeenCalledWith(3, { layout: 'IMAGE_GRID' })
     expect(screen.getByRole('radio', { name: /image grid/i })).toHaveAttribute('aria-checked', 'true')
-    expect(screen.queryByText('Tap to preview')).not.toBeInTheDocument()
+    expect(screen.queryByText('Hold to preview')).not.toBeInTheDocument()
   })
 })

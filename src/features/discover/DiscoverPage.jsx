@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'motion/react'
 import { Eye } from 'lucide-react'
@@ -16,6 +18,7 @@ import UniverseBoard from '@/features/universe/UniverseBoard.jsx'
 import { useMyUniverse } from '@/features/universe/useMyUniverse.js'
 import MatchMoment from './MatchMoment.jsx'
 import SwipeBar from './SwipeBar.jsx'
+import TitlePoster from './TitlePoster.jsx'
 
 function Owner({ universe }) {
   const styles = universe.style ? universe.style.split(', ').map(displayStyle).join(' · ') : universe.name
@@ -30,7 +33,7 @@ function Owner({ universe }) {
       </span>
       <span className="flex min-w-0 flex-col gap-1">
         <span className="truncate text-[17px] font-semibold text-ink">@{universe.user?.handle}</span>
-        <span className="label-mono truncate text-[9px]">{styles}</span>
+        <span className="label-mono truncate text-[10px]">{styles}</span>
       </span>
     </div>
   )
@@ -107,7 +110,7 @@ export default function DiscoverPage() {
       {switcher}
 
       {feed.isPending || (feed.isFetching && !current) ? (
-        <span className="label-mono py-20 text-center">Universes colliding</span>
+        <Loader line={loadingLines.discover} />
       ) : !current ? (
         <EmptyState
           icon={Eye}
@@ -129,13 +132,8 @@ export default function DiscoverPage() {
             className="flex flex-col gap-[18px]"
           >
             <Owner universe={current} />
-            {current.description && <p className="-mt-1 font-serif text-lg text-secondary">{current.description}</p>}
-            <UniverseBoard
-              universe={current}
-              emptyState={
-                <div className="grid h-60 place-items-center rounded-2xl bg-paper font-serif text-lg text-secondary shadow-inset">{current.name}</div>
-              }
-            />
+            {current.description && current.images?.length > 0 && <p className="-mt-1 font-serif text-lg text-secondary">{current.description}</p>}
+            <UniverseBoard universe={current} emptyState={<TitlePoster universe={current} />} />
           </motion.article>
         </AnimatePresence>
       )}
