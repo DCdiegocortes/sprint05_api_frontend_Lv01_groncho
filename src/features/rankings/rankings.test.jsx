@@ -75,6 +75,6 @@ describe('rankings', () => {
     usersApi.getUserRanking.mockResolvedValue([])
     renderAt('/discover/rankings')
 
-    expect(await screen.findByText('No rankings yet.')).toBeInTheDocument()
+    expect(await screen.findByRole('link', { name: 'Explore universes in Discover' })).toHaveTextContent('No crowns yet. Taste is still deciding.')
   })
 })

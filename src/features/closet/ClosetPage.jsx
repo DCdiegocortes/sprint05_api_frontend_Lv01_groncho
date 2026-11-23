@@ -4,7 +4,8 @@ import { loadingLines } from '@/lib/loadingLines.js'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { ChevronLeft, Plus, Shirt, X } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router'
-import EmptyState from '@/components/EmptyState.jsx'
+import EmptyWall from '@/components/EmptyWall.jsx'
+import { OfferType } from '@/lib/constants.js'
 import PageHeader from '@/components/PageHeader.jsx'
 import { Button } from '@/components/ui/button.jsx'
 import { Chip } from '@/components/ui/chip.jsx'
@@ -16,16 +17,14 @@ import PieceSheet from './PieceSheet.jsx'
 import { closetSubline, filters, matchesFilter } from './pieces.js'
 import { useItems } from './useCloset.js'
 
-function EmptyCloset({ onAdd }) {
-  return (
-    <EmptyState
-      icon={Shirt}
-      title="Your closet is the other half of a match."
-      body="Add the pieces you would trade or gift. Matches only see what is here."
-      action="Add your first piece"
-      onAction={onAdd}
-    />
-  )
+const emptyLines = {
+  ALL: 'Nothing to swap but your opinions.',
+  [OfferType.GIFT]: 'No gifts yet. Generosity pending.',
+  [OfferType.TRADE]: 'Nothing to trade. Bold strategy.',
+}
+
+function EmptyCloset({ filter = 'ALL', onAdd }) {
+  return <EmptyWall icon={Shirt} line={emptyLines[filter]} action="Add a piece?" onClick={onAdd} label="Add a piece to your closet" />
 }
 
 function PieceDialog({ piece, onClose, onEdit, onDelete }) {
@@ -134,7 +133,7 @@ export default function ClosetPage() {
               ))}
             </ul>
           ) : (
-            <p className="font-serif text-lg text-secondary">No pieces offered this way yet.</p>
+            <EmptyCloset filter={filter} onAdd={() => openForm()} />
           )}
 
           <button
