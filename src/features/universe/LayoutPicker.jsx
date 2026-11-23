@@ -176,8 +176,9 @@ export default function LayoutPicker({ value, onChange, photos = [], universe })
       <div
         role="radiogroup"
         aria-label="Layout"
-        onMouseMove={(event) => mouseX.set(event.clientX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
+        onPointerMove={(event) => mouseX.set(event.pointerType === 'mouse' ? event.clientX : Infinity)}
+        onPointerLeave={() => mouseX.set(Infinity)}
+        onPointerDown={(event) => event.pointerType !== 'mouse' && mouseX.set(Infinity)}
         className="no-scrollbar -mx-6 flex snap-x scroll-px-6 items-end gap-3 overflow-x-auto px-6 pt-2 pb-5 md:pointer-events-none md:-mt-36 md:pt-38 md:*:pointer-events-auto"
       >
         {layouts.map((layout) => {
