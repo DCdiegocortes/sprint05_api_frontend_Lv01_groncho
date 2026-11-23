@@ -23,7 +23,7 @@ export function SheetContent({ title, subtitle, serif = false, className, childr
             >
               {title}
             </DialogPrimitive.Title>
-            <DialogPrimitive.Description className={serif ? 'font-serif text-lg leading-snug text-secondary' : 'label-mono text-[9px]'}>
+            <DialogPrimitive.Description className={serif ? 'font-serif text-lg leading-snug text-secondary' : 'label-mono text-[10px]'}>
               {subtitle}
             </DialogPrimitive.Description>
           </div>

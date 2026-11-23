@@ -71,7 +71,7 @@ export default function FirstPhotosPage() {
         <Logo size={20} />
         <span className="flex items-center gap-1.5 rounded-full bg-paper px-3 py-1.5 shadow-inset">
           <span className="size-1.5 rounded-full bg-accent" />
-          <span className="label-mono text-[8.5px]">Last step</span>
+          <span className="label-mono text-[10px]">Last step</span>
         </span>
       </div>
 
@@ -87,8 +87,8 @@ export default function FirstPhotosPage() {
 
       <section aria-label="Preview" className="mt-6 flex flex-col gap-2.5 rounded-[26px] bg-card p-3 shadow-raised">
         <div className="flex items-center justify-between px-1 pt-0.5">
-          <span className="label-mono text-[9px]">How others see it</span>
-          <span className="rounded-full bg-accent px-2.5 py-1 font-mono text-[8.5px] font-medium tracking-[0.16em] text-white uppercase">
+          <span className="label-mono text-[10px]">How others see it</span>
+          <span className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] font-medium tracking-[0.16em] text-white uppercase">
             {layoutName(layout)}
           </span>
         </div>
@@ -117,7 +117,7 @@ export default function FirstPhotosPage() {
       <section className="relative mt-6 flex flex-col gap-2.5">
         <div className="flex items-center justify-between">
           <span className="label-mono font-medium">Layout</span>
-          <span className="label-mono text-[9px] text-accent">Swipe for all 10</span>
+          <span className="label-mono text-[10px] text-accent">Swipe for all 10</span>
         </div>
         {!coachSeen && (
           <span className="pointer-events-none absolute -top-5 left-[132px] z-10 flex items-center gap-2 rounded-[14px] bg-ink px-3.5 py-2 text-[12.5px] font-medium text-white shadow-float">
@@ -136,7 +136,7 @@ export default function FirstPhotosPage() {
         <button
           type="button"
           onClick={() => navigate('/discover')}
-          className="press label-mono text-[9px] transition-opacity duration-220 ease-ui hover:opacity-70"
+          className="press label-mono text-[10px] transition-opacity duration-220 ease-ui hover:opacity-70"
         >
           I will add photos later
         </button>

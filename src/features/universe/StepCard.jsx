@@ -13,14 +13,14 @@ export default function StepCard({ number, title, status, statusTone = 'muted', 
       <header className="flex items-center gap-2.5">
         <span
           className={cn(
-            'grid size-[26px] shrink-0 place-items-center rounded-full font-mono text-[9px] font-medium transition-[box-shadow,color,background-color] duration-220 ease-ui',
+            'grid size-[26px] shrink-0 place-items-center rounded-full font-mono text-[10px] font-medium transition-[box-shadow,color,background-color] duration-220 ease-ui',
             active ? 'bg-paper text-accent shadow-pressed' : 'bg-card text-secondary shadow-subtle',
           )}
         >
           {number}
         </span>
         <h2 className="flex-1 text-[15px] font-semibold text-ink">{title}</h2>
-        <span className={cn('label-mono text-[9px]', statusTone === 'accent' && 'text-accent')}>{status}</span>
+        <span className={cn('label-mono text-[10px]', statusTone === 'accent' && 'text-accent')}>{status}</span>
       </header>
       {children}
     </section>

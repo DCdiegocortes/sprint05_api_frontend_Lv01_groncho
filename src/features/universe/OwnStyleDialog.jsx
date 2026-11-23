@@ -33,7 +33,7 @@ export default function OwnStyleDialog({ open, onOpenChange, styles, onAdd }) {
         <form onSubmit={submit} noValidate className="flex flex-col gap-[22px]">
           <div className="flex items-center gap-2 pr-8">
             <span aria-hidden="true" className="size-[5px] rounded-full bg-accent" />
-            <DialogTitle className="label-mono text-[9px] font-normal">Your own style</DialogTitle>
+            <DialogTitle className="label-mono text-[10px] font-normal">Your own style</DialogTitle>
           </div>
           <DialogDescription className="sr-only">Name a style that is not in the list.</DialogDescription>
           <Input

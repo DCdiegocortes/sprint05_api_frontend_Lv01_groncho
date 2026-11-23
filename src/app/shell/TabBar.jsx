@@ -58,7 +58,7 @@ export default function TabBar() {
                     </motion.span>
                     <span
                       className={cn(
-                        'font-mono text-[8px] tracking-[0.12em] uppercase',
+                        'font-mono text-[10px] tracking-[0.12em] uppercase',
                         isActive ? 'font-medium text-ink' : 'text-secondary',
                       )}
                     >

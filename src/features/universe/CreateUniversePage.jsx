@@ -80,7 +80,7 @@ export default function CreateUniversePage() {
               />
             ))}
           </div>
-          <span className="label-mono text-[8.5px]">
+          <span className="label-mono text-[10px]">
             {done} of 3 · {progressCopy[done]}
           </span>
         </div>
@@ -155,7 +155,7 @@ export default function CreateUniversePage() {
         <Button type="submit" className="w-full" disabled={create.isPending}>
           {create.isPending ? 'Building your universe' : 'Create universe'}
         </Button>
-        <span className="label-mono text-[9px]">Next · Dress it in photos</span>
+        <span className="label-mono text-[10px]">Next · Dress it in photos</span>
       </div>
 
       <OwnStyleDialog open={ownOpen} onOpenChange={setOwnOpen} styles={styles} onAdd={addOwn} />

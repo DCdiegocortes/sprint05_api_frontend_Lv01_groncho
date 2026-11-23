@@ -32,7 +32,7 @@ function Owner({ universe }) {
       </span>
       <span className="flex min-w-0 flex-col gap-1">
         <span className="truncate text-[17px] font-semibold text-ink">@{universe.user?.handle}</span>
-        <span className="label-mono truncate text-[9px]">{styles}</span>
+        <span className="label-mono truncate text-[10px]">{styles}</span>
       </span>
     </div>
   )

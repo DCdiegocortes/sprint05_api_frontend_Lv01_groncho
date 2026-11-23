@@ -34,7 +34,7 @@ export default function SongSheet({ open, onOpenChange, universe, onSave, saving
               )}
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="truncate text-sm font-semibold text-ink">{universe.spotify_track_title ?? 'Current soundtrack'}</span>
-                <span className="label-mono text-[8px]">Now playing in your universe</span>
+                <span className="label-mono text-[10px]">Now playing in your universe</span>
               </span>
               <button
                 type="button"
