@@ -74,8 +74,8 @@ function MatchRow({ match, selected }) {
 }
 
 const emptyLines = {
-  none: 'Matches start with a like. Go find your people.',
-  [MatchStatus.ACTIVE]: 'No matches yet. Someone out there dresses like you.',
+  none: 'Your taste is single. Go mingle.',
+  [MatchStatus.ACTIVE]: 'Your taste is single. Go mingle.',
   [MatchStatus.CLOSED]: 'No goodbyes yet. Every match is still on.',
 }
 
