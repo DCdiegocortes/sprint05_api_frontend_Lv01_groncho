@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Input } from '@/components/ui/input.jsx'
+import { Segmented } from '@/components/ui/segmented.jsx'
 import { Sheet, SheetContent } from '@/components/ui/sheet.jsx'
-import { cn } from '@/lib/utils'
 import { stickerSets, suggestedEmojis } from '../decorations.js'
 
 const isSingleEmoji = (value) =>
@@ -20,29 +20,23 @@ export default function StickersSheet({ open, onOpenChange, onPick }) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent title="Stickers" subtitle="Drag one onto your universe">
-        <div role="tablist" className="grid grid-cols-2 rounded-full bg-paper p-1 shadow-inset">
-          {['stickers', 'emojis'].map((value) => (
-            <button
-              key={value}
-              type="button"
-              role="tab"
-              aria-selected={tab === value}
-              onClick={() => setTab(value)}
-              className={cn(
-                'press label-mono h-10 rounded-full text-[9px] transition-shadow duration-220 ease-ui',
-                tab === value ? 'bg-card text-ink shadow-subtle' : '',
-              )}
-            >
-              {value}
-            </button>
-          ))}
-        </div>
+        <Segmented
+          label="Stickers or emojis"
+          fit
+          className="w-full"
+          value={tab}
+          onChange={setTab}
+          options={[
+            { value: 'stickers', label: 'Stickers' },
+            { value: 'emojis', label: 'Emojis' },
+          ]}
+        />
 
         {tab === 'stickers' ? (
           <div className="mt-5 flex flex-col gap-5">
             {stickerSets.map(({ set, stickers }) => (
               <section key={set} className="flex flex-col gap-2.5">
-                <span className="label-mono text-[9px]">{set}</span>
+                <span className="label-mono text-[10px]">{set}</span>
                 <div className="grid grid-cols-4 gap-3">
                   {stickers.map((sticker) => (
                     <button
