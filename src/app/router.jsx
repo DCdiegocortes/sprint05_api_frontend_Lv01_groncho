@@ -15,6 +15,10 @@ import MatchesPage from '@/features/matches/MatchesPage.jsx'
 import RequestsPage from '@/features/requests/RequestsPage.jsx'
 import NotificationsPage from '@/features/notifications/NotificationsPage.jsx'
 import ProfilePage from '@/features/profile/ProfilePage.jsx'
+import AdminUsersPage from '@/features/admin/AdminUsersPage.jsx'
+import ModeratePage from '@/features/admin/ModeratePage.jsx'
+import RequireAdmin from '@/features/admin/RequireAdmin.jsx'
+import UserDetailPage from '@/features/admin/UserDetail.jsx'
 import AppShell from './shell/AppShell.jsx'
 import StyleguidePage from './StyleguidePage.jsx'
 
@@ -50,8 +54,22 @@ export const routes = [
               { path: '/matches/:matchId', element: <MatchesPage /> },
               { path: '/universe', element: <MyUniversePage /> },
               { path: '/universe/requests', element: <RequestsPage /> },
-              { path: '/notifications', element: <NotificationsPage /> },
-              { path: '/profile', element: <ProfilePage /> },
+            ],
+          },
+        ],
+      },
+      {
+        element: <AppShell />,
+        children: [
+          { path: '/notifications', element: <NotificationsPage /> },
+          { path: '/profile', element: <ProfilePage /> },
+          {
+            element: <RequireAdmin />,
+            children: [
+              { path: '/admin', element: <Navigate to="/admin/users" replace /> },
+              { path: '/admin/users', element: <AdminUsersPage /> },
+              { path: '/admin/users/:userId', element: <UserDetailPage /> },
+              { path: '/admin/users/:userId/moderate', element: <ModeratePage /> },
             ],
           },
         ],
