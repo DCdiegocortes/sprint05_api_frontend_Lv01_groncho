@@ -18,6 +18,7 @@ import UniverseBoard from '@/features/universe/UniverseBoard.jsx'
 import { useMyUniverse } from '@/features/universe/useMyUniverse.js'
 import MatchMoment from './MatchMoment.jsx'
 import SwipeBar from './SwipeBar.jsx'
+import TitlePoster from './TitlePoster.jsx'
 
 function Owner({ universe }) {
   const styles = universe.style ? universe.style.split(', ').map(displayStyle).join(' · ') : universe.name
@@ -131,13 +132,8 @@ export default function DiscoverPage() {
             className="flex flex-col gap-[18px]"
           >
             <Owner universe={current} />
-            {current.description && <p className="-mt-1 font-serif text-lg text-secondary">{current.description}</p>}
-            <UniverseBoard
-              universe={current}
-              emptyState={
-                <div className="grid h-60 place-items-center rounded-2xl bg-paper font-serif text-lg text-secondary shadow-inset">{current.name}</div>
-              }
-            />
+            {current.description && current.images?.length > 0 && <p className="-mt-1 font-serif text-lg text-secondary">{current.description}</p>}
+            <UniverseBoard universe={current} emptyState={<TitlePoster universe={current} />} />
           </motion.article>
         </AnimatePresence>
       )}
