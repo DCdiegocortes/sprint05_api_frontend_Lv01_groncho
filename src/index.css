@@ -246,3 +246,94 @@ input:autofill:focus {
     transform: scale(0.97);
   }
 }
+
+@property --comet-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes comet-lap {
+  0% {
+    --comet-angle: 0deg;
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    --comet-angle: 360deg;
+    opacity: 0;
+  }
+}
+
+@keyframes comet-settle {
+  0%,
+  88% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes eq-bar {
+  from {
+    transform: scaleY(0.25);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility comet {
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--comet-angle),
+    transparent 0deg,
+    transparent 230deg,
+    color-mix(in srgb, var(--color-accent) 12%, transparent) 280deg,
+    var(--color-accent) 358deg,
+    transparent 360deg
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: comet-lap 3s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+
+@utility comet-settle {
+  animation: comet-settle 3s linear both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility eq-bar {
+  transform-origin: bottom;
+  animation: eq-bar var(--eq-speed, 0.9s) ease-in-out infinite alternate;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    transform: scaleY(0.6);
+  }
+}
+
+@utility breathe {
+  animation: breathe 0.9s ease-in-out infinite alternate;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

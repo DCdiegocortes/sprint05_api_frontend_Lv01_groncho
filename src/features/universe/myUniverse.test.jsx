@@ -48,7 +48,7 @@ describe('my universe', () => {
     expect(screen.getByText('Gothic / dark · Japandi', { exact: false })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /006\s*pieces/i })).toHaveAttribute('href', '/closet')
     expect(screen.getByRole('link', { name: /edit universe/i })).toHaveAttribute('href', '/universe/edit')
-    expect(screen.getByText('No song yet')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Add a soundtrack' })).toBeInTheDocument()
     expect(screen.getByText('quiet armour.')).toBeInTheDocument()
   })
 })
