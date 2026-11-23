@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { createElement, useContext } from 'react'
 import { motion } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { PhotoFrameContext } from '../photoFrame.js'
@@ -12,14 +12,16 @@ function PlainFrame({ className, style, children }) {
 }
 
 export default function Photo({ photo, copy = 0, className, style, imageClassName, imageStyle }) {
-  const Frame = useContext(PhotoFrameContext) ?? PlainFrame
-  return (
-    <Frame
-      photo={photo}
-      dragId={copy ? `${photo.id}::${copy}` : photo.id}
-      className={cn('relative overflow-hidden rounded-2xl bg-plate', className)}
-      style={style}
-    >
+  const frame = useContext(PhotoFrameContext) ?? PlainFrame
+  return createElement(
+    frame,
+    {
+      photo,
+      dragId: copy ? `${photo.id}::${copy}` : photo.id,
+      className: cn('relative overflow-hidden rounded-2xl bg-plate', className),
+      style,
+    },
+    <>
       <motion.img
         src={photo.url}
         alt=""
@@ -35,6 +37,6 @@ export default function Photo({ photo, copy = 0, className, style, imageClassNam
           <span className="font-mono text-[10px] font-medium text-ink">{Math.round(photo.progress * 100)}%</span>
         </span>
       )}
-    </Frame>
+    </>,
   )
 }
