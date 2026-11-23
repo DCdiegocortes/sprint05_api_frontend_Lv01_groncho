@@ -2,8 +2,9 @@ import { useState } from 'react'
 import Loader from '@/components/Loader.jsx'
 import { loadingLines } from '@/lib/loadingLines.js'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { ChevronLeft, Plus, Shirt, X } from 'lucide-react'
-import { Link, useNavigate, useParams } from 'react-router'
+import { Plus, Shirt, X } from 'lucide-react'
+import { useNavigate, useParams } from 'react-router'
+import BackLink from '@/components/BackLink.jsx'
 import EmptyWall from '@/components/EmptyWall.jsx'
 import { OfferType } from '@/lib/constants.js'
 import PageHeader from '@/components/PageHeader.jsx'
@@ -84,12 +85,7 @@ export default function ClosetPage() {
   if (piece && !wide) {
     return (
       <div className="flex flex-col gap-4">
-        <Link to="/closet" className="press flex w-fit items-center gap-2.5">
-          <span className="grid size-10 place-items-center rounded-full bg-paper text-ink shadow-raised">
-            <ChevronLeft className="size-[18px]" strokeWidth={1.8} />
-          </span>
-          <span className="label-mono">Closet</span>
-        </Link>
+        <BackLink to="/closet">Closet</BackLink>
         <PieceDetail piece={piece} onEdit={() => openForm(piece)} onDelete={() => setDeleting(true)} />
         {sheets}
       </div>

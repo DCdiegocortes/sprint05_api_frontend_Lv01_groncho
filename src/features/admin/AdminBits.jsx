@@ -1,23 +1,8 @@
-import { Link } from 'react-router'
-import { ChevronLeft } from 'lucide-react'
 import Avatar from '@/components/Avatar.jsx'
 import { cn } from '@/lib/utils'
 import { isAdmin, joined } from './useAdmin.js'
 
-export function BackLink({ to, children, className }) {
-  return (
-    <Link
-      to={to}
-      className={cn(
-        'press flex items-center gap-1.5 self-start py-1 text-[15px] font-medium text-accent transition-opacity duration-220 ease-ui hover:opacity-70',
-        className,
-      )}
-    >
-      <ChevronLeft className="size-4" strokeWidth={1.8} />
-      {children}
-    </Link>
-  )
-}
+export { default as BackLink } from '@/components/BackLink.jsx'
 
 export function RoleChip({ user }) {
   if (!isAdmin(user)) return <span className="font-mono text-[10px] tracking-[0.12em] text-secondary uppercase">User</span>

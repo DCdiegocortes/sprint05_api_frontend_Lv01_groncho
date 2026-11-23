@@ -1,4 +1,5 @@
-import { Bell, ChevronLeft } from 'lucide-react'
+import { Bell } from 'lucide-react'
+import BackLink from '@/components/BackLink.jsx'
 import Loader from '@/components/Loader.jsx'
 import { loadingLines } from '@/lib/loadingLines.js'
 import { useNavigate } from 'react-router'
@@ -13,17 +14,9 @@ export default function NotificationsPage() {
 
   return (
     <div className="flex flex-col gap-[18px] xl:max-w-[720px] xl:gap-10">
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center">
-        <button
-          type="button"
-          aria-label="Back"
-          onClick={() => navigate(-1)}
-          className="press grid size-[42px] place-items-center rounded-full bg-paper text-ink shadow-raised active:shadow-pressed"
-        >
-          <ChevronLeft className="size-[18px]" strokeWidth={1.8} />
-        </button>
-        <span className="font-mono text-[10px] font-medium tracking-[0.16em] text-secondary uppercase">Activity</span>
-        <span className="justify-self-end">{notifications?.length > 0 && <ReadAll notifications={notifications} />}</span>
+      <div className="flex items-center justify-between">
+        <BackLink onClick={() => navigate(-1)}>Back</BackLink>
+        {notifications?.length > 0 && <ReadAll notifications={notifications} />}
       </div>
 
       <PageHeader label="006 — Notifications" title="Notifications" subline="What moved while you were away." />

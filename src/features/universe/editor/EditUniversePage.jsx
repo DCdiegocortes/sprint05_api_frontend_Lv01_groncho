@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Loader from '@/components/Loader.jsx'
 import { loadingLines } from '@/lib/loadingLines.js'
-import { Link, useLocation, useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { AnimatePresence, motion } from 'motion/react'
-import { ChevronLeft, ChevronUp, Image, Music, Smile, Type } from 'lucide-react'
+import { ChevronUp, Image, Music, Smile, Type } from 'lucide-react'
 import TabBar from '@/app/shell/TabBar.jsx'
+import BackLink from '@/components/BackLink.jsx'
 import TopActions from '@/app/shell/TopActions.jsx'
 import Logo from '@/components/Logo.jsx'
 import { Limits, UniverseLayout } from '@/lib/constants.js'
@@ -136,14 +137,9 @@ export default function EditUniversePage() {
       </div>
 
       <header className="flex flex-col gap-1">
-        <Link
-          to="/universe"
-          onClick={leave}
-          className="press mb-2 flex items-center gap-1.5 self-start text-[15px] font-medium text-accent opacity-60 transition-opacity duration-220 ease-ui hover:opacity-100 focus-visible:opacity-100"
-        >
-          <ChevronLeft className="size-4" strokeWidth={1.8} />
+        <BackLink to="/universe" onClick={leave} className="mb-1">
           My universe
-        </Link>
+        </BackLink>
         <SaveStatus state={saveState} onRetry={retry} />
         <h1 className="text-display font-bold">Edit universe</h1>
         <p className="font-serif text-subline text-secondary">Drag photos to reorder them.</p>
