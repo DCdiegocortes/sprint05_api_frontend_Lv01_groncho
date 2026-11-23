@@ -5,7 +5,7 @@ import { Heart } from 'lucide-react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router'
 import PageHeader from '@/components/PageHeader.jsx'
 import Avatar from '@/components/Avatar.jsx'
-import EmptyState from '@/components/EmptyState.jsx'
+import EmptyWall from '@/components/EmptyWall.jsx'
 import Toast from '@/components/Toast.jsx'
 import { Segmented } from '@/components/ui/segmented.jsx'
 import { useMediaQuery } from '@/hooks/useMediaQuery.js'
@@ -73,16 +73,14 @@ function MatchRow({ match, selected }) {
   )
 }
 
-function EmptyMatches() {
-  return (
-    <EmptyState
-      icon={Heart}
-      title="Matches start in Discover."
-      body="When someone likes your universe back, their wardrobe opens here."
-      action="Go to Discover"
-      to="/discover"
-    />
-  )
+const emptyLines = {
+  none: 'Matches start with a like. Go find your people.',
+  [MatchStatus.ACTIVE]: 'No matches yet. Someone out there dresses like you.',
+  [MatchStatus.CLOSED]: 'Nothing closed. Every wardrobe is still open.',
+}
+
+function EmptyMatches({ kind }) {
+  return <EmptyWall icon={Heart} line={emptyLines[kind]} action="Explore universes" to="/discover" label="Explore universes in Discover" />
 }
 
 export default function MatchesPage() {
@@ -134,7 +132,7 @@ export default function MatchesPage() {
     return (
       <div className="flex flex-col gap-[18px] xl:gap-10">
         <PageHeader label="003 — Matches" title="Matches" subline="Nobody yet, and that is fine." />
-        <EmptyMatches />
+        <EmptyMatches kind="none" />
       </div>
     )
   }
@@ -158,7 +156,12 @@ export default function MatchesPage() {
     <div className="flex flex-col gap-[18px] xl:gap-10">
       <PageHeader label="003 — Matches" title="Matches" subline={subline} />
 
-      {wide ? (
+      {!shown.length ? (
+        <>
+          <div className="xl:w-[340px]">{switcher}</div>
+          <EmptyMatches kind={status} />
+        </>
+      ) : wide ? (
         <div className="grid grid-cols-[340px_minmax(0,1fr)] items-start gap-8">
           <div className="flex flex-col gap-4">
             {switcher}
@@ -166,7 +169,6 @@ export default function MatchesPage() {
               {shown.map((match) => (
                 <MatchRow key={match.id} match={match} selected={selected?.id === match.id} />
               ))}
-              {!shown.length && <p className="px-1 font-serif text-lg text-secondary">Nothing here yet.</p>}
             </div>
           </div>
           {selected && (
@@ -182,7 +184,6 @@ export default function MatchesPage() {
             {shown.map((match) => (
               <MatchCard key={match.id} match={match} />
             ))}
-            {!shown.length && <p className="font-serif text-lg text-secondary">Nothing here yet.</p>}
           </div>
         </>
       )}
