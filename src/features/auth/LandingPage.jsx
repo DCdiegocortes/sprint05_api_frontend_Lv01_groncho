@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router'
+import Toast from '@/components/Toast.jsx'
 import { Button } from '@/components/ui/button.jsx'
 import AuthScreen from './AuthScreen.jsx'
+import { useAuth } from './useAuth.js'
 
 export default function LandingPage() {
   const navigate = useNavigate()
+  const { loggedOut, clearLoggedOut } = useAuth()
 
   return (
     <AuthScreen
@@ -30,6 +33,7 @@ export default function LandingPage() {
           A clothing exchange where aesthetic affinity comes before ownership. No money, just universes finding each other.
         </p>
       </section>
+      <Toast toast={loggedOut ? { title: 'You are logged out', hint: 'See you soon' } : null} onDone={clearLoggedOut} />
     </AuthScreen>
   )
 }
