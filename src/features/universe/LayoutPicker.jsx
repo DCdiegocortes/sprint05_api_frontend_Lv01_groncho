@@ -168,7 +168,7 @@ export default function LayoutPicker({ value, onChange, photos = [], universe })
   }
 
   return (
-    <div ref={wrapper} className="relative">
+    <div ref={wrapper} className="relative isolate">
       <AnimatePresence>{preview && <Preview key={preview.layout} universe={universe} layout={preview.layout} left={preview.left} />}</AnimatePresence>
       <div
         role="radiogroup"
