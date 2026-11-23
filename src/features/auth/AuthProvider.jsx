@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
   const [hasToken, setHasToken] = useState(() => Boolean(getToken()))
   const [sessionEnded, setSessionEnded] = useState(false)
   const [landing, setLanding] = useState('/discover')
+  const [loggedOut, setLoggedOut] = useState(false)
 
   const profile = useQuery({
     queryKey: queryKeys.profile,
@@ -37,8 +38,12 @@ export function AuthProvider({ children }) {
     async (credentials, redirectTo = '/discover') => {
       const { token } = await authApi.login(credentials)
       setToken(token)
-      const user = await queryClient.fetchQuery({ queryKey: queryKeys.profile, queryFn: getProfile })
+      const user = await queryClient.fetchQuery({
+        queryKey: queryKeys.profile,
+        queryFn: getProfile,
+      })
       setSessionEnded(false)
+      setLoggedOut(false)
       setLanding(redirectTo)
       setHasToken(true)
       return user
@@ -59,9 +64,12 @@ export function AuthProvider({ children }) {
       await authApi.logout()
     } finally {
       setLanding('/discover')
+      setLoggedOut(true)
       endSession()
     }
   }, [endSession])
+
+  const clearLoggedOut = useCallback(() => setLoggedOut(false), [])
 
   const value = useMemo(
     () => ({
@@ -70,12 +78,14 @@ export function AuthProvider({ children }) {
       isLoading: hasToken && profile.isPending,
       isAdmin: profile.data?.role === Role.ADMIN,
       sessionEnded,
+      loggedOut,
+      clearLoggedOut,
       landing,
       login,
       register,
       logout,
     }),
-    [profile.data, profile.isPending, hasToken, sessionEnded, landing, login, register, logout],
+    [profile.data, profile.isPending, hasToken, sessionEnded, loggedOut, clearLoggedOut, landing, login, register, logout],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

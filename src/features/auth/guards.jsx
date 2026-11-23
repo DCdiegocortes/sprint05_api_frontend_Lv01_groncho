@@ -10,9 +10,10 @@ function Loading() {
 }
 
 export function RequireAuth() {
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated, isLoading, loggedOut } = useAuth()
   const location = useLocation()
 
+  if (!isAuthenticated && loggedOut) return <Navigate to="/" replace />
   if (!isAuthenticated) return <Navigate to="/login" replace state={{ from: location.pathname }} />
   if (isLoading) return <Loading />
   return <Outlet />
