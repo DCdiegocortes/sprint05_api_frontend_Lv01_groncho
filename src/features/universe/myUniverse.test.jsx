@@ -51,4 +51,18 @@ describe('my universe', () => {
     expect(screen.getByRole('button', { name: 'Add a soundtrack' })).toBeInTheDocument()
     expect(screen.getByText('quiet armour.')).toBeInTheDocument()
   })
+
+  it('shows a blank poster that opens the photos tool when there are no photos', async () => {
+    universesApi.getMyUniverse.mockResolvedValue({ ...universe, images: [], decorations: [] })
+    const router = createMemoryRouter(routes, { initialEntries: ['/universe'] })
+    render(
+      <Providers client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+        <RouterProvider router={router} />
+      </Providers>,
+    )
+
+    const poster = await screen.findByRole('link', { name: 'Add photos to your universe' })
+    expect(poster).toHaveAttribute('href', '/universe/edit')
+    expect(poster).toHaveTextContent('A blank wall. Hang your first photo.')
+  })
 })

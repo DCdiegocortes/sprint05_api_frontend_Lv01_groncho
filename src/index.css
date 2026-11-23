@@ -280,3 +280,62 @@ input:autofill:focus {
     animation: none;
   }
 }
+
+@keyframes ink-in {
+  from {
+    color: var(--color-engrave);
+  }
+  to {
+    color: var(--color-ink);
+  }
+}
+
+@keyframes sink-in {
+  from {
+    box-shadow: var(--shadow-raised);
+    transform: scale(1);
+  }
+  to {
+    box-shadow: var(--shadow-pressed);
+    transform: scale(0.94);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility ink-in {
+  animation: ink-in 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility sink-in {
+  box-shadow: var(--shadow-pressed);
+  transform: scale(0.94);
+  animation: sink-in 0.55s var(--ease-ui) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility appear {
+  animation: appear 0.4s ease both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility text-emboss {
+  color: var(--color-engrave);
+  text-shadow:
+    0.5px 0.5px 0.5px rgb(255 255 255 / 0.95),
+    -0.6px -0.8px 1px rgb(0 0 0 / 0.32);
+}
