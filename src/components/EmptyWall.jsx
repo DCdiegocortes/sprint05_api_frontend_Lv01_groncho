@@ -5,16 +5,17 @@ const START = 0.4
 const STEP = 0.17
 const WORD = 0.7
 
-export default function EmptyWall({ icon: Icon, line, action, to, state, label, className }) {
+export default function EmptyWall({ icon: Icon, line, action, to, state, onClick, label, className }) {
   const words = line.split(' ')
   const settle = START + (words.length - 1) * STEP + WORD
+  const Wall = onClick ? 'button' : Link
+  const target = onClick ? { type: 'button', onClick } : { to, state }
 
   return (
-    <Link
-      to={to}
-      state={state}
+    <Wall
+      {...target}
       aria-label={label}
-      className={cn('group grid min-h-[420px] place-items-center rounded-[28px] bg-paper px-6 shadow-inset xl:min-h-[520px]', className)}
+      className={cn('group grid min-h-[420px] w-full place-items-center rounded-[28px] bg-paper px-6 shadow-inset xl:min-h-[520px]', className)}
     >
       <span className="flex flex-col items-center gap-4 text-center">
         <span
@@ -41,6 +42,6 @@ export default function EmptyWall({ icon: Icon, line, action, to, state, label, 
           {action}
         </span>
       </span>
-    </Link>
+    </Wall>
   )
 }

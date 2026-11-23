@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import Loader from '@/components/Loader.jsx'
 import { loadingLines } from '@/lib/loadingLines.js'
-import { Heart } from 'lucide-react'
+import { Heart, HeartOff } from 'lucide-react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router'
 import PageHeader from '@/components/PageHeader.jsx'
 import Avatar from '@/components/Avatar.jsx'
@@ -76,11 +76,22 @@ function MatchRow({ match, selected }) {
 const emptyLines = {
   none: 'Matches start with a like. Go find your people.',
   [MatchStatus.ACTIVE]: 'No matches yet. Someone out there dresses like you.',
-  [MatchStatus.CLOSED]: 'Nothing closed. Every wardrobe is still open.',
+  [MatchStatus.CLOSED]: 'No goodbyes yet. Every match is still on.',
 }
 
-function EmptyMatches({ kind }) {
-  return <EmptyWall icon={Heart} line={emptyLines[kind]} action="Explore universes?" to="/discover" label="Explore universes in Discover" />
+function EmptyMatches({ kind, onSeeActive }) {
+  if (kind === MatchStatus.CLOSED && onSeeActive) {
+    return <EmptyWall icon={HeartOff} line={emptyLines[kind]} action="See your matches?" onClick={onSeeActive} label="See your active matches" />
+  }
+  return (
+    <EmptyWall
+      icon={kind === MatchStatus.CLOSED ? HeartOff : Heart}
+      line={emptyLines[kind]}
+      action="Explore universes?"
+      to="/discover"
+      label="Explore universes in Discover"
+    />
+  )
 }
 
 export default function MatchesPage() {
@@ -159,7 +170,7 @@ export default function MatchesPage() {
       {!shown.length ? (
         <>
           <div className="xl:w-[340px]">{switcher}</div>
-          <EmptyMatches kind={status} />
+          <EmptyMatches kind={status} onSeeActive={active.length ? () => setView(MatchStatus.ACTIVE) : undefined} />
         </>
       ) : wide ? (
         <div className="grid grid-cols-[340px_minmax(0,1fr)] items-start gap-8">
