@@ -153,13 +153,6 @@ export default function LayoutPicker({ value, onChange, photos = [], universe })
   const holdTimer = useRef(null)
   const held = useRef(false)
   const wrapper = useRef(null)
-  const [shown, setShown] = useState(value)
-  const [lap, setLap] = useState(null)
-
-  if (value !== shown) {
-    setShown(value)
-    setLap((current) => ({ value, n: (current?.n ?? 0) + 1 }))
-  }
 
   const show = (layout, target) => {
     if (!universe || !photos.length) return
@@ -223,18 +216,7 @@ export default function LayoutPicker({ value, onChange, photos = [], universe })
                 selected ? 'bg-card shadow-raised' : 'bg-paper',
               )}
             >
-              {selected && (
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    'pointer-events-none absolute inset-0 rounded-[20px] border-[1.5px] border-accent',
-                    lap?.value === layout.value && 'comet-settle',
-                  )}
-                />
-              )}
-              {selected && lap?.value === layout.value && (
-                <span key={lap.n} aria-hidden="true" className="comet pointer-events-none absolute inset-0 rounded-[20px]" />
-              )}
+              {selected && <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[20px] border-[1.5px] border-accent" />}
               <span className="block h-[79px] overflow-hidden rounded-[14px] bg-paper p-1.5 shadow-inset">
                 <Thumb value={layout.value} photos={photos} />
               </span>
