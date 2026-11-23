@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import * as authApi from '@/api/auth.js'
 import { setUnauthorizedHandler } from '@/api/client.js'
 import { getProfile } from '@/api/profile.js'
+import { getMyUniverse } from '@/api/universes.js'
 import { Role } from '@/lib/constants.js'
 import { queryKeys } from '@/lib/queryKeys.js'
 import { clearToken, getToken, setToken } from '@/lib/session.js'
@@ -42,9 +43,16 @@ export function AuthProvider({ children }) {
         queryKey: queryKeys.profile,
         queryFn: getProfile,
       })
+      const adminWithoutUniverse =
+        user?.role === Role.ADMIN &&
+        redirectTo === '/discover' &&
+        (await queryClient.fetchQuery({ queryKey: queryKeys.myUniverse, queryFn: getMyUniverse }).then(
+          () => false,
+          (error) => error?.response?.status === 404,
+        ))
       setSessionEnded(false)
       setLoggedOut(false)
-      setLanding(redirectTo)
+      setLanding(adminWithoutUniverse ? '/admin/users' : redirectTo)
       setHasToken(true)
       return user
     },
