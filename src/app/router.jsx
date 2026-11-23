@@ -14,7 +14,7 @@ import RequireUniverse from '@/features/universe/RequireUniverse.jsx'
 import MatchesPage from '@/features/matches/MatchesPage.jsx'
 import RequestsPage from '@/features/requests/RequestsPage.jsx'
 import NotificationsPage from '@/features/notifications/NotificationsPage.jsx'
-import { ProfilePage } from './placeholders.jsx'
+import ProfilePage from '@/features/profile/ProfilePage.jsx'
 import AppShell from './shell/AppShell.jsx'
 import StyleguidePage from './StyleguidePage.jsx'
 
