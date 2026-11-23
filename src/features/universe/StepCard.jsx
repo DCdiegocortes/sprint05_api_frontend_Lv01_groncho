@@ -20,7 +20,10 @@ export default function StepCard({ number, title, status, statusTone = 'muted', 
           {number}
         </span>
         <h2 className="flex-1 text-[15px] font-semibold text-ink">{title}</h2>
-        <span className={cn('label-mono text-[10px]', statusTone === 'accent' && 'text-accent')}>{status}</span>
+        <span className={cn('label-mono flex items-center gap-2 text-[10px]', statusTone === 'accent' && 'text-ink/70')}>
+          {statusTone === 'accent' && <span aria-hidden="true" className="size-[5px] shrink-0 rounded-full bg-accent" />}
+          {status}
+        </span>
       </header>
       {children}
     </section>

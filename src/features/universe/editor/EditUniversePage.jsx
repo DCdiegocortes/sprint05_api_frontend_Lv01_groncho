@@ -155,8 +155,9 @@ export default function EditUniversePage() {
           <button
             type="button"
             onClick={() => setSheet('layouts')}
-            className="press font-mono text-[10px] font-medium tracking-[0.12em] text-accent uppercase transition-opacity duration-220 ease-ui hover:opacity-70"
+            className="press flex items-center gap-2 font-mono text-[10px] font-medium tracking-[0.12em] text-ink/70 uppercase transition-colors duration-220 ease-ui hover:text-ink"
           >
+            <span aria-hidden="true" className="size-[5px] shrink-0 rounded-full bg-accent" />
             See all {layouts.length}
           </button>
         </div>

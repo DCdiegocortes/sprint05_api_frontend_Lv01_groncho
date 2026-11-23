@@ -21,7 +21,7 @@ function Counter({ value, label, to }) {
         className="size-[5px] shrink-0 -translate-y-[3px] scale-0 rounded-full bg-accent transition-transform duration-220 ease-ui group-hover:scale-100"
       />
       <span className="text-emboss font-mono text-[26px] leading-none font-medium">{pad(value)}</span>
-      <span className="font-mono text-[10px] tracking-[0.14em] text-secondary uppercase transition-colors duration-220 ease-ui group-hover:text-accent">
+      <span className="font-mono text-[10px] tracking-[0.14em] text-secondary uppercase transition-colors duration-220 ease-ui group-hover:text-ink">
         {label}
       </span>
     </Link>

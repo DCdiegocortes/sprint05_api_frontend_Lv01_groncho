@@ -12,11 +12,7 @@ function Circle({ photo, initial, delay, offset }) {
       transition={{ ...pop, delay }}
       className="grid size-[152px] place-items-center overflow-hidden rounded-full bg-paper shadow-raised"
     >
-      {photo ? (
-        <img src={photo} alt="" className="size-full object-cover" />
-      ) : (
-        <span className="font-mono text-3xl text-secondary">{initial}</span>
-      )}
+      {photo ? <img src={photo} alt="" className="size-full object-cover" /> : <span className="font-mono text-3xl text-secondary">{initial}</span>}
     </motion.span>
   )
 }
@@ -43,7 +39,10 @@ export default function MatchMoment({ mine, theirs, handle, onOpenWardrobe, onKe
               <Circle photo={theirs?.photo} initial={theirs?.initial} delay={0.12} offset={40} />
             </span>
           </div>
-          <span className="mt-7 font-mono text-[10px] font-medium tracking-[0.16em] text-accent uppercase">Universes collided</span>
+          <span className="mt-7 flex items-center gap-2 font-mono text-[10px] font-medium tracking-[0.16em] text-ink/70 uppercase">
+            <span aria-hidden="true" className="size-[5px] shrink-0 rounded-full bg-accent" />
+            Universes collided
+          </span>
           <h2 id="match-title" className="mt-6 font-serif text-[68px] leading-[0.95] text-ink">
             It&apos;s a match.
           </h2>

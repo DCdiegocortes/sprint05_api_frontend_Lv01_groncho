@@ -36,7 +36,7 @@ export default function LayoutsSheet({ open, onOpenChange, value, photos, onPick
               </span>
               <span className="flex min-w-0 flex-col gap-1 px-1 pb-1">
                 <span className="truncate text-[13px] leading-tight font-semibold text-ink">{layout.name}</span>
-                <span className={cn('label-mono truncate text-[10px] leading-snug', selected && 'text-accent')}>{layout.hint}</span>
+                <span className={cn('label-mono truncate text-[10px] leading-snug', selected && 'text-ink/70')}>{layout.hint}</span>
               </span>
             </button>
           )

@@ -38,7 +38,7 @@ export default function SaveStatus({ state, onRetry }) {
               <button
                 type="button"
                 onClick={onRetry}
-                className="press flex items-center gap-1.5 text-accent transition-opacity duration-220 ease-ui hover:opacity-70"
+                className="press flex items-center gap-1.5 text-ink/70 transition-colors duration-220 ease-ui hover:text-ink"
               >
                 <span aria-hidden="true" className="size-[5px] rounded-full bg-accent" />
                 Not saved · retry

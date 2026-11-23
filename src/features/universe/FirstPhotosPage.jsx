@@ -117,7 +117,10 @@ export default function FirstPhotosPage() {
       <section className="relative mt-6 flex flex-col gap-2.5">
         <div className="flex items-center justify-between">
           <span className="label-mono font-medium">Layout</span>
-          <span className="label-mono text-[10px] text-accent">Swipe for all 10</span>
+          <span className="label-mono flex items-center gap-2 text-[10px] text-ink/70">
+            <span aria-hidden="true" className="size-[5px] shrink-0 rounded-full bg-accent" />
+            Swipe for all 10
+          </span>
         </div>
         {!coachSeen && (
           <span className="pointer-events-none absolute -top-5 left-[132px] z-10 flex items-center gap-2 rounded-[14px] bg-ink px-3.5 py-2 text-[12.5px] font-medium text-white shadow-float">

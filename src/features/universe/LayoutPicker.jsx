@@ -93,7 +93,10 @@ function Preview({ universe, layout, left }) {
     >
       <div className="flex items-center justify-between px-1.5 pb-2">
         <span className="label-mono text-[10px]">Preview</span>
-        <span className="font-mono text-[10px] font-medium tracking-[0.16em] text-accent uppercase">{layoutName(layout)}</span>
+        <span className="flex items-center gap-2 font-mono text-[10px] font-medium tracking-[0.16em] text-ink/70 uppercase">
+          <span aria-hidden="true" className="size-[5px] shrink-0 rounded-full bg-accent" />
+          {layoutName(layout)}
+        </span>
       </div>
       <div className="max-h-[300px] overflow-hidden rounded-2xl">
         <UniverseBoard universe={{ ...universe, layout }} />
@@ -222,7 +225,7 @@ export default function LayoutPicker({ value, onChange, photos = [], universe })
               </span>
               <span className="flex min-w-0 flex-col gap-1 px-1 pb-1">
                 <span className="truncate text-[13px] leading-tight font-semibold whitespace-nowrap text-ink">{layout.name}</span>
-                <span className={cn('label-mono truncate text-[10px] leading-snug tracking-[0.04em] whitespace-nowrap', selected && 'text-accent')}>
+                <span className={cn('label-mono truncate text-[10px] leading-snug tracking-[0.04em] whitespace-nowrap', selected && 'text-ink/70')}>
                   {layout.hint}
                 </span>
               </span>
