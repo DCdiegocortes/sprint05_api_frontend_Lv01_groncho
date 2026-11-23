@@ -339,3 +339,26 @@ input:autofill:focus {
     0.5px 0.5px 0.5px rgb(255 255 255 / 0.95),
     -0.6px -0.8px 1px rgb(0 0 0 / 0.32);
 }
+
+@keyframes word-loop {
+  0% {
+    color: var(--color-engrave);
+  }
+  14%,
+  72% {
+    color: var(--color-ink);
+  }
+  88%,
+  100% {
+    color: var(--color-engrave);
+  }
+}
+
+@utility word-loop {
+  color: var(--color-engrave);
+  animation: word-loop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    color: var(--color-ink);
+  }
+}

@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { Link, useLocation } from 'react-router'
 import { ChevronRight, Search } from 'lucide-react'
 import PageHeader from '@/components/PageHeader.jsx'
@@ -100,7 +102,7 @@ export default function AdminUsersPage() {
           <span className="w-[180px]">Role</span>
           <span className="w-[220px]">Joined</span>
         </div>
-        {isPending && <p className="label-mono py-4">Loading users</p>}
+        {isPending && <Loader line={loadingLines.admin} className="py-12" />}
         {isError && <p className="py-4 text-sm text-secondary">The users could not be loaded. Try again in a moment.</p>}
         {!isPending && !isError && !shown.length && (
           <p className="py-4 text-sm text-secondary">{search ? `No one matches “${search.trim()}”.` : 'No one here yet.'}</p>

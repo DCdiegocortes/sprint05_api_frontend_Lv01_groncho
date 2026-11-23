@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { ChevronLeft, Plus, Shirt, X } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -72,7 +74,13 @@ export default function ClosetPage() {
     </>
   )
 
-  if (!pieces) return <PageHeader label="002 — Closet" title="Closet" />
+  if (!pieces)
+    return (
+      <div className="flex flex-col">
+        <PageHeader label="002 — Closet" title="Closet" />
+        <Loader line={loadingLines.closet} />
+      </div>
+    )
 
   if (piece && !wide) {
     return (

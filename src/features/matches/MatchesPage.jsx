@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { Heart } from 'lucide-react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router'
 import PageHeader from '@/components/PageHeader.jsx'
@@ -100,7 +102,13 @@ export default function MatchesPage() {
     navigate('/matches')
   }
 
-  if (!matches) return <PageHeader label="003 — Matches" title="Matches" />
+  if (!matches)
+    return (
+      <div className="flex flex-col">
+        <PageHeader label="003 — Matches" title="Matches" />
+        <Loader line={loadingLines.matches} />
+      </div>
+    )
 
   const active = matches.filter(isActive)
   const closed = matches.filter((match) => match.status === MatchStatus.CLOSED)

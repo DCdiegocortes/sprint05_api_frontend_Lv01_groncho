@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'motion/react'
 import { Eye } from 'lucide-react'
@@ -107,7 +109,7 @@ export default function DiscoverPage() {
       {switcher}
 
       {feed.isPending || (feed.isFetching && !current) ? (
-        <span className="label-mono py-20 text-center">Universes colliding</span>
+        <Loader line={loadingLines.discover} />
       ) : !current ? (
         <EmptyState
           icon={Eye}

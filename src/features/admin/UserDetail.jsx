@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { Link, useNavigate, useParams } from 'react-router'
 import { Trash2 } from 'lucide-react'
 import { Panel, PanelClose, PanelTitle } from '@/components/ui/panel.jsx'
@@ -96,7 +98,7 @@ export default function UserDetailPage() {
   return (
     <div className="flex w-full flex-col gap-7 xl:mx-auto xl:w-[640px] xl:gap-10">
       <BackLink to="/admin/users">Users</BackLink>
-      {isPending && <span className="label-mono">Loading</span>}
+      {isPending && <Loader line={loadingLines.admin} />}
       {isError && <p className="text-sm text-secondary">This user could not be loaded.</p>}
       {user && (
         <>

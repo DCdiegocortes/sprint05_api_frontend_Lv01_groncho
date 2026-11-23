@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { AnimatePresence, motion } from 'motion/react'
 import { ChevronLeft, ChevronUp, Image, Music, Smile, Type } from 'lucide-react'
@@ -94,7 +96,7 @@ export default function EditUniversePage() {
     setLeaving(true)
   }
 
-  if (!universe) return null
+  if (!universe) return <Loader full line={loadingLines.universe} />
 
   const decorations = draft ?? universe.decorations ?? []
   const photos = universe.images ?? []

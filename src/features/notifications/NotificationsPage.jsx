@@ -1,4 +1,6 @@
 import { Bell, ChevronLeft } from 'lucide-react'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { useNavigate } from 'react-router'
 import EmptyState from '@/components/EmptyState.jsx'
 import PageHeader from '@/components/PageHeader.jsx'
@@ -26,6 +28,7 @@ export default function NotificationsPage() {
 
       <PageHeader label="006 — Notifications" title="Notifications" subline="What moved while you were away." />
 
+      {!notifications && <Loader line={loadingLines.notifications} />}
       {notifications &&
         (notifications.length ? (
           <NotificationList notifications={notifications} hint="Tap to open · swipe left to mark read · all the way to delete" />

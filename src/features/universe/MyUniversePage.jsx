@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import Loader from '@/components/Loader.jsx'
+import { loadingLines } from '@/lib/loadingLines.js'
 import { Pencil } from 'lucide-react'
 import { Link, useNavigate } from 'react-router'
 import { getMyUniverse } from '@/api/universes.js'
@@ -29,7 +31,7 @@ function Counter({ value, label, to }) {
 export default function MyUniversePage() {
   const { data: universe } = useQuery({ queryKey: queryKeys.myUniverse, queryFn: getMyUniverse })
   const navigate = useNavigate()
-  if (!universe) return null
+  if (!universe) return <Loader line={loadingLines.universe} />
 
   const styles = universe.style ? universe.style.split(', ') : []
 
