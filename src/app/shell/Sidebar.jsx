@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Link, NavLink } from 'react-router'
-import { MoreHorizontal } from 'lucide-react'
+import { MoreHorizontal, Shield } from 'lucide-react'
 import { tabs } from '@/app/navigation.js'
 import Avatar from '@/components/Avatar.jsx'
 import Logo from '@/components/Logo.jsx'
@@ -21,7 +21,7 @@ function sizeFor(index, hovered) {
 }
 
 export default function Sidebar() {
-  const { user } = useAuth()
+  const { user, isAdmin } = useAuth()
   const [hovered, setHovered] = useState(null)
   const reduceMotion = useReducedMotion()
 
@@ -37,10 +37,7 @@ export default function Sidebar() {
                 <NavLink
                   to={to}
                   className={({ isActive }) =>
-                    cn(
-                      'press block rounded-lg px-5 transition-colors duration-220 ease-ui',
-                      isActive ? 'bg-card shadow-raised' : 'hover:bg-card/60',
-                    )
+                    cn('press block rounded-lg px-5 transition-colors duration-220 ease-ui', isActive ? 'bg-card shadow-raised' : 'hover:bg-card/60')
                   }
                 >
                   {({ isActive }) => (
@@ -70,6 +67,28 @@ export default function Sidebar() {
           })}
         </ul>
       </nav>
+      {isAdmin && (
+        <div className="mt-[29px] flex flex-col border-t border-hairline pt-[22px]">
+          <span className="ml-5 font-mono text-[10px] leading-[13px] font-medium tracking-[0.16em] text-secondary uppercase">Admin only</span>
+          <NavLink
+            to="/admin/users"
+            className={({ isActive }) =>
+              cn(
+                'press mt-3 flex items-center gap-4 rounded-lg px-5 py-[13px] transition-colors duration-220 ease-ui',
+                isActive ? 'bg-card shadow-raised' : 'hover:bg-card/60',
+              )
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <Shield className="size-[26px] shrink-0" strokeWidth={1.6} />
+                <span className={cn('text-[17px] leading-none text-ink', isActive ? 'font-semibold' : 'font-medium')}>Admin</span>
+                {isActive && <span className="ml-auto size-2 shrink-0 rounded-full bg-accent" />}
+              </>
+            )}
+          </NavLink>
+        </div>
+      )}
       <Link to="/profile" className="press group mt-auto flex items-center gap-3 rounded-lg px-2 py-2">
         <Avatar
           user={user}

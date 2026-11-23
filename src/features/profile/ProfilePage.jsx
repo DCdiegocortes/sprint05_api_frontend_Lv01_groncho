@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
-import { Camera, ChevronRight, LogOut } from 'lucide-react'
+import { Link } from 'react-router'
+import { Camera, ChevronRight, LogOut, Shield } from 'lucide-react'
 import Avatar from '@/components/Avatar.jsx'
 import PageHeader from '@/components/PageHeader.jsx'
 import Toast from '@/components/Toast.jsx'
@@ -30,7 +31,7 @@ function Row({ label, value, onClick }) {
 }
 
 export default function ProfilePage() {
-  const { user, logout } = useAuth()
+  const { user, logout, isAdmin } = useAuth()
   const photo = usePhotoPicker()
   const [open, setOpen] = useState(null)
   const [leaving, setLeaving] = useState(false)
@@ -79,6 +80,22 @@ export default function ProfilePage() {
             <Row label="Password" value="••••••••" onClick={() => setOpen('password')} />
           </div>
         </Group>
+
+        {isAdmin && (
+          <Group label="Admin">
+            <Link
+              to="/admin/users"
+              className="press group flex h-[58px] w-full items-center gap-3 rounded-[20px] bg-paper px-[18px] shadow-raised transition-opacity duration-220 ease-ui hover:opacity-80"
+            >
+              <Shield className="size-[18px] text-ink" strokeWidth={1.8} />
+              <span className="flex-1 text-[15px] font-medium text-ink">Users and moderation</span>
+              <ChevronRight
+                className="size-4 shrink-0 text-secondary transition-transform duration-220 ease-ui group-hover:translate-x-0.5"
+                strokeWidth={1.8}
+              />
+            </Link>
+          </Group>
+        )}
 
         <Group label="Session">
           <button
