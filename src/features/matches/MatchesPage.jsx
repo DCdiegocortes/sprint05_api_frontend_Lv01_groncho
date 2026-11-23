@@ -80,7 +80,7 @@ const emptyLines = {
 }
 
 function EmptyMatches({ kind }) {
-  return <EmptyWall icon={Heart} line={emptyLines[kind]} action="Explore universes" to="/discover" label="Explore universes in Discover" />
+  return <EmptyWall icon={Heart} line={emptyLines[kind]} action="Explore universes?" to="/discover" label="Explore universes in Discover" />
 }
 
 export default function MatchesPage() {

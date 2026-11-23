@@ -163,7 +163,7 @@ export default function RequestPanel({ match, piece, onClose }) {
             ) : (
               <p className="rounded-[20px] bg-paper px-5 py-4 font-serif text-lg text-secondary shadow-inset">
                 Nothing to offer yet.{' '}
-                <Link to="/closet" className="font-sans text-[15px] font-medium text-accent transition-opacity duration-220 ease-ui hover:opacity-70">
+                <Link to="/closet" className="press inline-block font-sans text-[15px] font-medium text-accent transition-opacity duration-220 ease-ui hover:opacity-70">
                   Add a piece
                 </Link>
               </p>

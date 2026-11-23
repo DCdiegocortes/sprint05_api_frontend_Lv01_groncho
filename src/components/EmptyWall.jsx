@@ -35,7 +35,7 @@ export default function EmptyWall({ icon: Icon, line, action, to, state, label, 
           ))}
         </span>
         <span
-          className="appear text-[15px] font-medium text-accent transition-opacity duration-220 ease-ui group-hover:opacity-70"
+          className="appear text-[15px] font-medium text-accent transition-[opacity,transform] duration-220 ease-ui group-hover:opacity-70 group-active:scale-[0.97]"
           style={{ animationDelay: `${settle + 0.25}s` }}
         >
           {action}

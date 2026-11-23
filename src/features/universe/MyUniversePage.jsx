@@ -15,7 +15,7 @@ const pad = (value) => String(value ?? 0).padStart(3, '0')
 
 function Counter({ value, label, to }) {
   return (
-    <Link to={to} className="group flex items-baseline gap-2">
+    <Link to={to} className="press group flex items-baseline gap-2">
       <span
         aria-hidden="true"
         className="size-[5px] shrink-0 -translate-y-[3px] scale-0 rounded-full bg-accent transition-transform duration-220 ease-ui group-hover:scale-100"
