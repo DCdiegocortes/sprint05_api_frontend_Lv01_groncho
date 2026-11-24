@@ -358,6 +358,10 @@ The project follows **Gitflow**: `main` holds the scaffold, `develop` collects t
 
 ## 015 — Personal reflection
 
-Working with an AI as the main author changed what my job was. I wrote very little code by hand; most of my time went into deciding what the app should be, describing it precisely, and reviewing what came back. The planning documents and the Figma wireframes were the most useful part of the process: once a screen was designed and measured, the code that followed was right almost on the first try, while screens I described only with words needed many rounds of corrections.
+Working with an AI as the main author changed what my job was. I wrote very little code by hand; most of my time went into deciding what the app should be, describing it precisely, and reviewing what came back.
+
+The first wireframes were worked on broadly, the whole app at once, instead of screen by screen. The screens the AI generated that way had many errors: they were filled with too much content, elements and screens overlapped, and they did not work well, neither visually nor for the user. Things changed when I moved to one branch per screen: each screen was designed and measured in Figma first, and the code that followed was right almost on the first try.
 
 I also learned that the AI does not bring taste on its own. Its first proposals were correct but generic, and the app only started to look like Grôncho when I gave it references, said clearly what I did not like, and wrote those rules down so they applied everywhere. Building the front also taught me about my own API: designing real screens showed data it was missing, and fixing it there, with tests, was better than working around it in the client.
+
+The other limit was Claude's usage limit. Long sessions ran out of tokens and stopped in the middle of a task until the limit reset, and when a conversation grew too long the earlier part was summarised, so details I had already explained were sometimes lost and had to be repeated. Keeping the rules written in `AGENTS.md` and committing each finished screen made those interruptions easier to recover from.
