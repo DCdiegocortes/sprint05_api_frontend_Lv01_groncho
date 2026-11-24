@@ -7,7 +7,7 @@ export default function AuthScreen({ children, actions, onSubmit }) {
     <Tag
       onSubmit={onSubmit}
       noValidate
-      className="mx-auto flex min-h-dvh w-full max-w-[440px] flex-col px-6 pt-[max(env(safe-area-inset-top),24px)] pb-[max(env(safe-area-inset-bottom),32px)]"
+      className="mx-auto flex min-h-dvh w-full max-w-[440px] flex-col px-6 pt-[max(env(safe-area-inset-top),24px)] pb-[max(env(safe-area-inset-bottom),192px)]"
     >
       <div className="pt-10">
         <Logo size={22} />
